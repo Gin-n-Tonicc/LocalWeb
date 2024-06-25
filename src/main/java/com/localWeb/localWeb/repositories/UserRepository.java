@@ -1,6 +1,6 @@
 package com.localWeb.localWeb.repositories;
 
-import com.localWeb.localWeb.models.User;
+import com.localWeb.localWeb.models.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

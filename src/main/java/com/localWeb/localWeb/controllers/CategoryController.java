@@ -1,7 +1,7 @@
 package com.localWeb.localWeb.controllers;
 
 import com.localWeb.localWeb.models.dto.common.CategoryDTO;
-import com.localWeb.localWeb.service.CategoryService;
+import com.localWeb.localWeb.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

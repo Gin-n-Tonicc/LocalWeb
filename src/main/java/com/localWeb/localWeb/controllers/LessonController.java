@@ -2,7 +2,7 @@ package com.localWeb.localWeb.controllers;
 
 import com.localWeb.localWeb.models.dto.request.LessonRequest;
 import com.localWeb.localWeb.models.dto.response.LessonResponse;
-import com.localWeb.localWeb.service.LessonService;
+import com.localWeb.localWeb.services.LessonService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

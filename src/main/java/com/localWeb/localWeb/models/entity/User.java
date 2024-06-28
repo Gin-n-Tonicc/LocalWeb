@@ -1,12 +1,16 @@
 package com.localWeb.localWeb.models.entity;
 
 import com.localWeb.localWeb.enums.Provider;
+import com.localWeb.localWeb.enums.Role;
 import com.localWeb.localWeb.models.baseEntity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +22,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails {
 
     @NotNull(message = "The name of the user should not be null!")
     private String name;
@@ -37,10 +41,7 @@ public class User extends BaseEntity {
     @JoinColumn(name = "file_id")
     private File avatar;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private Provider provider;
-
+    @Getter
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -52,15 +53,6 @@ public class User extends BaseEntity {
     )
     @ToString.Exclude
     private Set<Organisation> organisations = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    @ToString.Exclude
-    private Set<Role> roles = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -81,6 +73,55 @@ public class User extends BaseEntity {
     private Set<Group> groups = new HashSet<>();
 
     @OneToMany(mappedBy = "phoneable", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private Set<Phone> phones = new HashSet<>();
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
+
+    @Column(name = "is_additional_info_required", nullable = false)
+    private boolean additionalInfoRequired;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return role.getAuthorities();
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @PrePersist
+    void prePersist() {
+        if (this.provider == null) {
+            this.provider = Provider.LOCAL;
+        }
+    }
 }
 

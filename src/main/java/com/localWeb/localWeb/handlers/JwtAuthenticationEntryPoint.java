@@ -1,7 +1,7 @@
 package com.localWeb.localWeb.handlers;
 
-import com.coolSchool.coolSchool.exceptions.common.AccessDeniedException;
-import com.coolSchool.coolSchool.utils.ObjectMapperHelper;
+import com.localWeb.localWeb.exceptions.common.AccessDeniedException;
+import com.localWeb.localWeb.utils.ObjectMapperHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

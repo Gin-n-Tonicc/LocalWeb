@@ -1,9 +1,9 @@
 package com.localWeb.localWeb.handlers;
 
-import com.coolSchool.coolSchool.exceptions.token.InvalidTokenException;
-import com.coolSchool.coolSchool.services.TokenService;
-import com.coolSchool.coolSchool.utils.CookieHelper;
-import com.coolSchool.coolSchool.utils.ObjectMapperHelper;
+import com.localWeb.localWeb.exceptions.token.InvalidTokenException;
+import com.localWeb.localWeb.services.TokenService;
+import com.localWeb.localWeb.utils.CookieHelper;
+import com.localWeb.localWeb.utils.ObjectMapperHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-import static com.coolSchool.coolSchool.services.impl.security.TokenServiceImpl.AUTH_COOKIE_KEY_JWT;
+import static com.localWeb.localWeb.services.impl.security.TokenServiceImpl.AUTH_COOKIE_KEY_JWT;
 
 /**
  * LogoutHandler is responsible for handling user logout by invalidating the JWT token and removing associated cookies.

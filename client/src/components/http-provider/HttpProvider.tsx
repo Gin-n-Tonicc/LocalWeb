@@ -37,8 +37,9 @@ function HttpProvider({ children }: PropsWithChildren) {
         removeTokensIfExpired();
 
         const isExpired = !Boolean(user.accessToken) && !isAuthenticated;
+        const refreshTokenExpired = !Boolean(user.refreshToken);
 
-        if (!isRefreshRequest && isExpired) {
+        if (!isRefreshRequest && isExpired && !refreshTokenExpired) {
           await refreshToken();
         }
 

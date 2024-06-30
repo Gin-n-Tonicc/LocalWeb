@@ -1,0 +1,162 @@
+$color-primary: $cyan;
+$color-primary-background: $cyan;
+$color-primary-dark: $cyan-dark;
+$color-primary-light: $cyan-light;
+$color-primary-shadow: 4px 7px 12px 0 rgba(35, 210, 226, 0.2);
+$color-primary-hover: $cyan-hover;
+
+$color-secondary: $violet;
+$color-secondary-dark: $violet-dark;
+$color-secondary-darker: $violet-darker;
+$color-secondary-shadow: 4px 7px 12px 0 rgba(97, 93, 250, 0.2);
+$color-secondary-hover: $violet-hover;
+
+$color-tertiary: $red-dark-mid;
+$color-tertiary-shadow: 4px 7px 12px 0 rgba(253, 67, 80, 0.2);
+$color-tertiary-hover: $red-hover;
+
+$color-body: #f8f8fb;
+$color-body-underlay: $white;
+
+$color-box-background: $white;
+$color-box-background-alt: $white-dark;
+$color-box-over-box-background: $white;
+$color-box-over-box-light-background: $white;
+
+$color-text: $black;
+$color-text-2: $black;
+$color-text-3: $black-dark-mid;
+$color-text-alt: $gray-dark;
+$color-text-alt-2: $gray;
+
+$color-text-selection: $color-primary-background;
+
+$color-text-link: $color-primary-dark;
+
+$color-icon: $gray;
+$color-icon-dark: #8b88ff;
+$color-icon-bold: $black;
+$color-rating-icon: $gray-lighter;
+$color-rating-icon-dark: $gray-dark;
+
+$color-divider: $gray-lighter;
+$color-border: $gray-light;
+$color-border-dark: #7a77fd;
+
+$shadow: 3px 5px 20px 0 rgba(94, 92, 154, 0.1);
+$shadow-alt: 0 0 40px 0 rgba(94, 92, 154, 0.1);
+$shadow-alt-2: 3px 5px 40px 0 rgba(94, 92, 154, 0.1);
+
+$shadow-light: 0 0 40px 0 rgba(94, 92, 154, 0.06);
+$shadow-light-alt: 3px 5px 40px 0 rgba(94, 92, 154, 0.06);
+
+$shadow-dark: 0 0 40px 0 rgba(94, 92, 154, 0.12);
+$shadow-dark-alt: 3px 5px 20px 0 rgba(94, 92, 154, 0.12);
+$shadow-dark-alt-2: 2px 3px 10px 0 rgba(94, 92, 154, 0.12);
+$shadow-dark-alt-3: 0 0 60px 0 rgba(94, 92, 154, 0.12);
+
+$shadow-darker: 3px 5px 20px 0px rgba(94, 92, 154, 0.16);
+
+$color-input-placeholder: $gray;
+$color-input-placeholder-dark: #8b88ff;
+
+$color-button-background: $black;
+$color-button-background-hover: $black-dark;
+$color-button-shadow: 3px 5px 10px 0 rgba(62, 63, 94, 0.2);
+$color-button-white-background-hover: $black-dark;
+$color-button-void-background-hover: $black-dark;
+
+$color-page-loader-background: $black;
+
+$color-loader-bar-1: #615dfa;
+$color-loader-bar-2: #5d71fb;
+$color-loader-bar-3: #5983fb;
+$color-loader-bar-4: #549afc;
+$color-loader-bar-5: #4eb2fd;
+$color-loader-bar-6: #49c9fe;
+$color-loader-bar-7: #45ddfe;
+$color-loader-bar-8: #41efff;
+
+$color-tab-switch-border: $white;
+$color-tab-switch-text: $white;
+$color-tab-switch-active-text: $black;
+$color-tab-switch-active-background: $white;
+
+$color-form-switch-background: $gray-lighter;
+$color-form-switch-button: $gray;
+
+$color-user-status-text: $color-text;
+
+$color-video-status-meta: $color-text-alt-2;
+
+$color-section-menu-item-icon-primary-active: $black;
+$color-section-menu-item-icon-secondary-active: $black;
+
+$color-chat-widget-message-hover: $gray-lighter;
+$color-chat-widget-close-button: $black;
+$color-chat-widget-conversation-background: $white-dark;
+$color-chat-widget-speaker-message: $white-darker;
+
+$color-navigation-widget-close-button: $black;
+
+$color-tooltip-background: $black;
+
+$color-dropdown-list-item-hover: $gray-lighter;
+
+$color-picture-item-overlay: rgba(36, 210, 226, 0.9);
+
+$color-text-sticker-background: $white;
+$color-text-sticker-negative-background: $black-darker;
+
+$color-tag-sticker-background: $white;
+$color-tag-sticker-icon: $black;
+$color-tag-sticker-icon-primary: $color-primary;
+
+$color-date-sticker-day-background: $black;
+
+$color-forum-post-user-tag-background: $color-secondary-darker;
+$color-forum-post-user-tag-organizer-background: $color-secondary;
+
+$color-album-preview-shadow: rgba(35, 210, 226, 0.9);
+
+$color-picture-collage-overlay-background: rgba(35, 210, 226, 0.9);
+
+$color-online: $green;
+$color-away: $gray;
+$color-offline: $red;
+$color-stream-live: $red-darker;
+
+$color-pattern-1: $violet;
+$color-pattern-2: $blue;
+$color-pattern-3: $light-blue;
+$color-pattern-4: $cyan;
+
+$color-account-stat-active-users: $color-pattern-1;
+$color-account-stat-visits: $color-pattern-2;
+$color-account-stat-session-duration: $color-pattern-3;
+$color-account-stat-returning-visitors: $color-pattern-4;
+
+$color-stat-item: $color-pattern-1;
+$color-stat-earning: $color-pattern-2;
+$color-stat-revenue: $color-pattern-3;
+$color-stat-balance: $color-pattern-4;
+
+$color-activity-reaction: $color-pattern-1;
+$color-activity-comment: $color-pattern-2;
+$color-activity-share: $color-pattern-3;
+$color-activity-update: $color-pattern-4;
+
+$gradient-category-all: linear-gradient(to right, #615dfa, #8d7aff);
+$gradient-category-featured: linear-gradient(to right, #417ae1, #5aafff);
+$gradient-category-digital: linear-gradient(to right, #2ebfef, #4ce4ff);
+$gradient-category-physical: linear-gradient(to right, #17cada, #2becfe);
+
+$color-category-all: $color-pattern-1;
+$color-category-featured: $color-pattern-2;
+$color-category-digital: $color-pattern-3;
+$color-category-physical: $color-pattern-4;
+
+$color-reference-bullet-reactions: $color-secondary;
+$color-reference-bullet-comments: $color-primary;
+$color-reference-bullet-shares: $blue;
+$color-reference-bullet-replies: $light-blue;

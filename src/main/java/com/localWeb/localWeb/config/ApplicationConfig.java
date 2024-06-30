@@ -1,10 +1,10 @@
 package com.localWeb.localWeb.config;
 
-import com.localWeb.localWeb.exceptions.user.UserNotFoundException;
-import com.localWeb.localWeb.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.localWeb.localWeb.exceptions.user.UserNotFoundException;
+import com.localWeb.localWeb.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;

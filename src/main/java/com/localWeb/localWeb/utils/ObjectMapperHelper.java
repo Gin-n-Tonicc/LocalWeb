@@ -1,8 +1,8 @@
 package com.localWeb.localWeb.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.localWeb.localWeb.exceptions.common.ApiException;
 import com.localWeb.localWeb.models.dto.response.ExceptionResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;

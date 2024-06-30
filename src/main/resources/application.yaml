@@ -40,6 +40,12 @@ spring:
             scope:
               - https://www.googleapis.com/auth/userinfo.email
               - https://www.googleapis.com/auth/userinfo.profile
+          facebook:
+            clientId: ${FACEBOOK_CLIENT_ID}
+            clientSecret: ${FACEBOOK_CLIENT_SECRET}
+            scope:
+              - email
+              - public_profile
     mail:
       host: smtp.gmail.com
       port: 465

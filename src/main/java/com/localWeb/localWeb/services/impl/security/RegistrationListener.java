@@ -3,7 +3,6 @@ package com.localWeb.localWeb.services.impl.security;
 import com.localWeb.localWeb.models.entity.User;
 import com.localWeb.localWeb.services.UserService;
 import com.localWeb.localWeb.services.impl.security.events.OnRegistrationCompleteEvent;
-
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;

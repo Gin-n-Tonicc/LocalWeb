@@ -9,12 +9,12 @@ import java.util.Map;
 /**
  * Enumeration representing OAuth2 providers available in the application.
  * This class is used to define and access different OAuth2 providers supported for authentication.
- * Providers - Local and Google
  */
 @Getter
 public enum Provider {
     LOCAL("local"),
-    GOOGLE("google");
+    GOOGLE("google"),
+    FACEBOOK("facebook");
 
     private static final Map<String, Provider> providerMap = new HashMap<>();
 

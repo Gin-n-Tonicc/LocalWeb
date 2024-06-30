@@ -1,7 +1,7 @@
 package com.localWeb.localWeb.security;
 
-import com.localWeb.localWeb.services.OAuth2AuthenticationService;
 import com.localWeb.localWeb.config.FrontendConfig;
+import com.localWeb.localWeb.services.OAuth2AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

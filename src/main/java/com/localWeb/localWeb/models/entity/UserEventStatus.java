@@ -1,14 +1,10 @@
 package com.localWeb.localWeb.models.entity;
+
 import com.localWeb.localWeb.enums.Status;
 import com.localWeb.localWeb.models.baseEntity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.*;
 
 @Getter
 @Setter

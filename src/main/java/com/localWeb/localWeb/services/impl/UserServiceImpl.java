@@ -118,17 +118,20 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(oAuth2User.getEmail()).orElse(null);
 
         if (user == null) {
-            final String NAME_PLACEHOLDER = "CHANGE_NAME";
             final String SURNAME_PLACEHOLDER = "CHANGE_SURNAME";
-
 
             RegisterRequest registerRequest = new RegisterRequest();
 
             registerRequest.setEmail(oAuth2User.getEmail());
             registerRequest.setProvider(oAuth2User.getProvider());
-            registerRequest.setName(NAME_PLACEHOLDER);
-            registerRequest.setSurname(SURNAME_PLACEHOLDER);
-            registerRequest.setRole(Role.USER);
+
+            if(oAuth2User.getProvider().equals(Provider.GOOGLE)) {
+                registerRequest.setName(oAuth2User.getGivenName());
+                registerRequest.setSurname(oAuth2User.getFamilyName());
+            } else if (oAuth2User.getProvider().equals(Provider.FACEBOOK)) {
+                registerRequest.setName(oAuth2User.getName());
+                registerRequest.setSurname(SURNAME_PLACEHOLDER);
+            }
 
             user = userRepository.save(buildUser(registerRequest));
         }
@@ -159,6 +162,7 @@ public class UserServiceImpl implements UserService {
                 .surname(request.getSurname())
                 .email(request.getEmail())
                 .provider(request.getProvider())
+                .role(Role.USER)
                 .additionalInfoRequired(additionalInfoRequired);
 
         if (request.getPassword() != null) {

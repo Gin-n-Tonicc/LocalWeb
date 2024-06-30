@@ -1,15 +1,24 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Authenticate from './components/authenticate/Authenticate';
+import HttpProvider from './components/http-provider/HttpProvider';
+import { AuthProvider } from './contexts/AuthContext';
 import Auth from './pages/auth/Auth';
 import { PageEnum } from './types/enums/PageEnum';
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route path={PageEnum.LOGIN} element={<Auth />} />
-        <Route path={PageEnum.REGISTER} element={<Auth />} />
-      </Routes>
+      <AuthProvider>
+        <HttpProvider>
+          <Authenticate>
+            <Routes>
+              <Route path={PageEnum.LOGIN} element={<Auth />} />
+              <Route path={PageEnum.REGISTER} element={<Auth />} />
+            </Routes>
+          </Authenticate>
+        </HttpProvider>
+      </AuthProvider>
     </>
   );
 }

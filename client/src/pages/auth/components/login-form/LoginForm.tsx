@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { oauth2Urls } from '../../../../api';
-import FormInput from '../../../../components/form-input/FormInput';
+import FormInput from '../../../../components/common/form-input/FormInput';
 import rocketImage from '../../img/rocket.png';
 import facebookIcon from './img/icons/facebook.svg';
 import googleIcon from './img/icons/google.svg';

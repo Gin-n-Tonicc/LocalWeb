@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import FormInput from '../../../../components/form-input/FormInput';
+import FormInput from '../../../../components/common/form-input/FormInput';
 import rocketImage from '../../img/rocket.png';
 
 type Inputs = {

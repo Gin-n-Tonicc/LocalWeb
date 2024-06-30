@@ -42,8 +42,8 @@ function RegisterForm() {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     // Register user
     await post({
-      firstname: data.firstName.trim(),
-      lastname: data.surName.trim(),
+      name: data.firstName.trim(),
+      surname: data.surName.trim(),
       email: data.email.trim(),
       password: data.password.trim(),
     });

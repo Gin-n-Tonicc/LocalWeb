@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-import './App.css';
 import Authenticate from './components/authenticate/Authenticate';
 import HttpProvider from './components/http-provider/HttpProvider';
 import { AuthProvider } from './contexts/AuthContext';

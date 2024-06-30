@@ -61,7 +61,7 @@ public class PasswordResetListener implements ApplicationListener<OnPasswordRese
                 + confirmationUrl + "\n\n"
                 + "If you did not request this change, please ignore this email.\n\n"
                 + "Best regards,\n"
-                + "Local Web Team";
+                + "Local Web Team!";
     }
 
     private String generateResetToken(User user) {

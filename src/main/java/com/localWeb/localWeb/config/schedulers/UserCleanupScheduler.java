@@ -34,7 +34,7 @@ public class UserCleanupScheduler {
         LocalDateTime thresholdDateTime = LocalDateTime.now().minusHours(24);
 
         // Retrieve unconfirmed users created before the threshold date time
-        List<User> unconfirmedUsers = userRepository.findByEnabledFalseAndCreatedAtBefore(thresholdDateTime);
+        List<User> unconfirmedUsers = userRepository.findByEnabledFalseAndCreatedAtBeforeAndDeletedAtIsNull(thresholdDateTime);
 
         for (User user : unconfirmedUsers) {
             List<VerificationToken> userVerificationTokens = verificationTokenRepository.findByUserAndCreatedAtBefore(user, thresholdDateTime);

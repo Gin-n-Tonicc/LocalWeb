@@ -2,7 +2,9 @@ package com.localWeb.localWeb.models.entity;
 
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -10,10 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 
 @Entity
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class VerificationToken {
@@ -41,6 +40,4 @@ public class VerificationToken {
         cal.add(Calendar.MINUTE, VerificationToken.EXPIRATION);
         return new Date(cal.getTime().getTime());
     }
-
-
 }

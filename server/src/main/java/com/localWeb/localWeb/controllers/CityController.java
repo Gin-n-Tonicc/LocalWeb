@@ -2,8 +2,9 @@ package com.localWeb.localWeb.controllers;
 
 import com.localWeb.localWeb.models.dto.request.CityRequest;
 import com.localWeb.localWeb.models.dto.response.CityResponse;
-import com.localWeb.localWeb.service.CityService;
-import io.swagger.v3.oas.annotations.*;
+import com.localWeb.localWeb.services.CityService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

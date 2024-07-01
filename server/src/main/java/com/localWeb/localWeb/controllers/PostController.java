@@ -2,7 +2,7 @@ package com.localWeb.localWeb.controllers;
 
 import com.localWeb.localWeb.models.dto.request.PostRequest;
 import com.localWeb.localWeb.models.dto.response.PostResponse;
-import com.localWeb.localWeb.service.PostService;
+import com.localWeb.localWeb.services.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

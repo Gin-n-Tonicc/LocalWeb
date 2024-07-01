@@ -2,7 +2,7 @@ package com.localWeb.localWeb.controllers;
 
 import com.localWeb.localWeb.models.dto.request.PhoneRequest;
 import com.localWeb.localWeb.models.dto.response.PhoneResponse;
-import com.localWeb.localWeb.service.PhoneService;
+import com.localWeb.localWeb.services.PhoneService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

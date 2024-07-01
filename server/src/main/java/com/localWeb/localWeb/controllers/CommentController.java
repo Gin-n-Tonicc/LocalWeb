@@ -2,7 +2,7 @@ package com.localWeb.localWeb.controllers;
 
 import com.localWeb.localWeb.models.dto.request.CommentRequest;
 import com.localWeb.localWeb.models.dto.response.CommentResponse;
-import com.localWeb.localWeb.service.CommentService;
+import com.localWeb.localWeb.services.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

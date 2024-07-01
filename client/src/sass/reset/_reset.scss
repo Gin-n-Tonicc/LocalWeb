@@ -1,0 +1,27 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+*::before,
+*::after {
+  display: block;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+select {
+  appearance: none;
+}

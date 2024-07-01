@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import Authenticate from './components/authenticate/Authenticate';
+import HttpProvider from './components/http-provider/HttpProvider';
+import { AuthProvider } from './contexts/AuthContext';
+import Auth from './pages/auth/Auth';
+import { PageEnum } from './types/enums/PageEnum';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <AuthProvider>
+        <HttpProvider>
+          <Authenticate>
+            <Routes>
+              <Route path={PageEnum.LOGIN} element={<Auth />} />
+              <Route path={PageEnum.REGISTER} element={<Auth />} />
+            </Routes>
+          </Authenticate>
+        </HttpProvider>
+      </AuthProvider>
+    </>
   );
 }
 

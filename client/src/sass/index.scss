@@ -1,0 +1,20 @@
+// Reset
+@import 'reset/reset';
+@import 'reset/bootstrap-override';
+
+// Variables
+@import 'variables.scss';
+
+// General
+@import 'general/color-theme';
+@import 'general/form';
+@import 'general/icon';
+@import 'general/grid';
+@import 'general/general';
+@import 'general/button';
+@import 'general/form-box';
+@import 'general/utils';
+@import 'general/table';
+@import 'general/widget';
+@import 'general/loader';
+// @import 'general/404';

@@ -49,7 +49,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
                 + confirmationUrl + "\n"
                 + "If you did not create an account with us, please ignore this email.\n"
                 + "Best regards,\n"
-                + "Cool School Team!";
+                + "Local Web Team!";
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);

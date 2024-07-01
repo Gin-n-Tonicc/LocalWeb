@@ -2,7 +2,7 @@ package com.localWeb.localWeb.controllers;
 
 import com.localWeb.localWeb.models.dto.request.OrganisationRequest;
 import com.localWeb.localWeb.models.dto.response.OrganisationResponse;
-import com.localWeb.localWeb.service.OrganisationService;
+import com.localWeb.localWeb.services.OrganisationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

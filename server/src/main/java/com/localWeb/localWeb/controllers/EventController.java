@@ -2,7 +2,7 @@ package com.localWeb.localWeb.controllers;
 
 import com.localWeb.localWeb.models.dto.request.EventRequest;
 import com.localWeb.localWeb.models.dto.response.EventResponse;
-import com.localWeb.localWeb.service.EventService;
+import com.localWeb.localWeb.services.EventService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

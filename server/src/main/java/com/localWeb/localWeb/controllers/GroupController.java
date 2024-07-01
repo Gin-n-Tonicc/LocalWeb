@@ -2,7 +2,7 @@ package com.localWeb.localWeb.controllers;
 
 import com.localWeb.localWeb.models.dto.request.GroupRequest;
 import com.localWeb.localWeb.models.dto.response.GroupResponse;
-import com.localWeb.localWeb.service.GroupService;
+import com.localWeb.localWeb.services.GroupService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.http.MediaType;
 
 @Getter
 @Setter
@@ -18,9 +19,8 @@ import lombok.*;
 public class File extends BaseEntity {
     @NotNull(message = "The name of the file should not be null!")
     private String name;
-    private FileType type;
+    private String type;
     @NotNull(message = "The path of the file should not be null!")
     private String path;
-    @NotNull(message = "The size of the file should not be null!")
     private Long size;
 }

@@ -13,16 +13,16 @@ import java.util.Map;
  * downloads, and processing based on their types.
  */
 public enum FileType {
-    PDF("pdf", MediaType.APPLICATION_PDF),
-    JPEG("jpg", MediaType.IMAGE_JPEG),
-    JPG("jpeg", MediaType.IMAGE_JPEG),
-    PNG("png", MediaType.IMAGE_PNG),
-    XLSX("xlsx", MediaType.valueOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")),
-    XLS("xls", MediaType.valueOf("application/vnd.ms-excel")),
-    DOC("doc", MediaType.valueOf("application/msword")),
-    PPTX("pptx", MediaType.valueOf("application/vnd.openxmlformats-officedocument.presentationml.presentation")),
-    DOCX("docx", MediaType.valueOf("application/msword")),
-    MP4("mp4", MediaType.valueOf("video/mp4"));
+    PDF(".pdf", MediaType.APPLICATION_PDF),
+    JPEG(".jpg", MediaType.IMAGE_JPEG),
+    JPG(".jpeg", MediaType.IMAGE_JPEG),
+    PNG(".png", MediaType.IMAGE_PNG),
+    XLSX(".xlsx", MediaType.valueOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")),
+    XLS(".xls", MediaType.valueOf("application/vnd.ms-excel")),
+    DOC(".doc", MediaType.valueOf("application/msword")),
+    PPTX(".pptx", MediaType.valueOf("application/vnd.openxmlformats-officedocument.presentationml.presentation")),
+    DOCX(".docx", MediaType.valueOf("application/msword")),
+    MP4(".mp4", MediaType.valueOf("video/mp4"));
 
     private static final Map<String, MediaType> FILE_TYPE_MEDIA_TYPE_MAP = new HashMap<>();
 

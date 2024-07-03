@@ -12,10 +12,16 @@ import com.localWeb.localWeb.repositories.FileRepository;
 import com.localWeb.localWeb.services.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -69,6 +75,32 @@ public class FileServiceImpl implements FileService {
         return saveFileToDatabase(file, fileName, path, extension);
     }
 
+    @Override
+    public File downloadImageFromURL(String imageUrl) throws Exception {
+        URI uri = new URI(imageUrl);
+        Resource resource = new UrlResource(uri);
+
+        File tempFile = File.createTempFile("downloaded-", ".jpg");
+        try (InputStream inputStream = resource.getInputStream();
+             FileOutputStream outputStream = new FileOutputStream(tempFile)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        }
+        return tempFile;
+    }
+
+    @Override
+    public File convertToFile(MultipartFile multipartFile, String fileName) throws IOException {
+        File tempFile = new File(fileName);
+        try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+            fos.write(multipartFile.getBytes());
+        }
+        return tempFile;
+    }
+
     private com.localWeb.localWeb.models.entity.File saveFileToDatabase(File file, String fileName, String path, String extension) throws IOException {
         com.localWeb.localWeb.models.entity.File fileUpload = new com.localWeb.localWeb.models.entity.File();
         fileUpload.setName(fileName);
@@ -76,14 +108,6 @@ public class FileServiceImpl implements FileService {
         fileUpload.setType(extension);
         fileUpload.setSize(Files.size(file.toPath()));
         return fileRepository.save(fileUpload);
-    }
-
-    public File convertToFile(MultipartFile multipartFile, String fileName) throws IOException {
-        File tempFile = new File(fileName);
-        try (FileOutputStream fos = new FileOutputStream(tempFile)) {
-            fos.write(multipartFile.getBytes());
-        }
-        return tempFile;
     }
 
     private String getExtension(String fileName) {

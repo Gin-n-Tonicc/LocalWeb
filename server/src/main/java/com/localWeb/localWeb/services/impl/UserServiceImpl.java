@@ -3,6 +3,7 @@ package com.localWeb.localWeb.services.impl;
 import com.localWeb.localWeb.enums.Provider;
 import com.localWeb.localWeb.enums.Role;
 import com.localWeb.localWeb.exceptions.common.AccessDeniedException;
+import com.localWeb.localWeb.exceptions.files.FileNotFoundException;
 import com.localWeb.localWeb.exceptions.user.UserCreateException;
 import com.localWeb.localWeb.exceptions.user.UserNotFoundException;
 import com.localWeb.localWeb.models.dto.auth.AdminUserDTO;
@@ -11,6 +12,7 @@ import com.localWeb.localWeb.models.dto.auth.RegisterRequest;
 import com.localWeb.localWeb.models.dto.request.CompleteOAuthRequest;
 import com.localWeb.localWeb.models.entity.User;
 import com.localWeb.localWeb.models.entity.VerificationToken;
+import com.localWeb.localWeb.repositories.FileRepository;
 import com.localWeb.localWeb.repositories.UserRepository;
 import com.localWeb.localWeb.repositories.VerificationTokenRepository;
 import com.localWeb.localWeb.security.CustomOAuth2User;
@@ -44,6 +46,7 @@ public class UserServiceImpl implements UserService {
     private final MessageSource messageSource;
     private final VerificationTokenRepository verificationTokenRepository;
     private final FileService fileService;
+    private final FileRepository fileRepository;
 
     /**
      * Creates a new user based on the provided registration request.
@@ -138,10 +141,10 @@ public class UserServiceImpl implements UserService {
                 registerRequest.setName(oAuth2User.getGivenName());
                 registerRequest.setSurname(oAuth2User.getFamilyName());
 
-                File file = downloadImage(oAuth2User.getPicture());
+                File file = fileService.downloadImageFromURL(oAuth2User.getPicture());
                 com.localWeb.localWeb.models.entity.File avatar = fileService.uploadFile(file, oAuth2User.getName() + ".png");
-                registerRequest.setAvatar(avatar);
-                System.out.println(avatar.toString());
+
+                registerRequest.setAvatarId(avatar.getId());
 
             } else if (oAuth2User.getProvider().equals(Provider.FACEBOOK)) {
                 registerRequest.setName(oAuth2User.getName());
@@ -170,6 +173,7 @@ public class UserServiceImpl implements UserService {
 
     private User buildUser(RegisterRequest request) {
         boolean additionalInfoRequired = !request.getProvider().equals(Provider.LOCAL);
+        com.localWeb.localWeb.models.entity.File avatar = fileRepository.findByIdAndDeletedAtIsNull(request.getAvatarId());
 
         User.UserBuilder userBuilder = User
                 .builder()
@@ -178,7 +182,7 @@ public class UserServiceImpl implements UserService {
                 .email(request.getEmail())
                 .provider(request.getProvider())
                 .role(Role.USER)
-                .avatar(request.getAvatar())
+                .avatar(avatar)
                 .additionalInfoRequired(additionalInfoRequired);
 
         if (request.getPassword() != null) {
@@ -197,21 +201,5 @@ public class UserServiceImpl implements UserService {
     public void createVerificationToken(User user, String token) {
         VerificationToken myToken = new VerificationToken(token, user);
         verificationTokenRepository.save(myToken);
-    }
-
-    public File downloadImage(String imageUrl) throws Exception {
-        URI uri = new URI(imageUrl);
-        Resource resource = new UrlResource(uri);
-
-        File tempFile = File.createTempFile("downloaded-", ".jpg");
-        try (InputStream inputStream = resource.getInputStream();
-             FileOutputStream outputStream = new FileOutputStream(tempFile)) {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-        }
-        return tempFile;
     }
 }

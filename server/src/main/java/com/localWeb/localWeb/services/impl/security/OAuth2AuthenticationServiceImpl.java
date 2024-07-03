@@ -10,6 +10,7 @@ import jakarta.servlet.http.Cookie;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.function.Consumer;
 
 /**
@@ -23,7 +24,7 @@ public class OAuth2AuthenticationServiceImpl implements OAuth2AuthenticationServ
     private final TokenService tokenService;
 
     @Override
-    public boolean processOAuthPostLogin(CustomOAuth2User oAuth2User, Consumer<Cookie> addCookieFunc) {
+    public boolean processOAuthPostLogin(CustomOAuth2User oAuth2User, Consumer<Cookie> addCookieFunc) throws Exception {
         // Process OAuth2 user and retrieve associated user entity
         User user = userService.processOAuthUser(oAuth2User);
 

@@ -8,6 +8,7 @@ import com.localWeb.localWeb.models.entity.User;
 import com.localWeb.localWeb.models.entity.VerificationToken;
 import com.localWeb.localWeb.security.CustomOAuth2User;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public interface UserService {
 
     void deleteUserById(UUID id, PublicUserDTO currentUser);
 
-    User processOAuthUser(CustomOAuth2User oAuth2User);
+    User processOAuthUser(CustomOAuth2User oAuth2User) throws Exception;
 
     User updateOAuth2UserWithFullData(CompleteOAuthRequest request, UUID userId);
 

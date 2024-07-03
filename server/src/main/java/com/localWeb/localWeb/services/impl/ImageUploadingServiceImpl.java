@@ -30,14 +30,21 @@ public class ImageUploadingServiceImpl implements ImageUploadingService {
 
     private final FileRepository fileRepository;
     private final MessageSource messageSource;
-    @Override
-    public String upload(MultipartFile multipartFile) throws IOException {
-        String fileName = multipartFile.getOriginalFilename();
-        assert fileName != null;
-        fileName = UUID.randomUUID().toString().concat(this.getExtension(fileName));
 
-        File file = this.convertToFile(multipartFile, fileName);
-        return this.uploadFile(file, fileName);
+    @Override
+    public String upload(MultipartFile[] multipartFiles) throws IOException {
+        StringBuilder response = new StringBuilder();
+
+        for (MultipartFile multipartFile : multipartFiles) {
+            String fileName = multipartFile.getOriginalFilename();
+            assert fileName != null;
+            fileName = UUID.randomUUID().toString().concat(this.getExtension(fileName));
+
+            File file = this.convertToFile(multipartFile, fileName);
+
+            response.append(this.uploadFile(file, fileName)).append("\n");
+        }
+        return response.toString();
     }
 
     private String uploadFile(File file, String fileName) throws IOException {

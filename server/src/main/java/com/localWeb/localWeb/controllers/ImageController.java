@@ -18,7 +18,7 @@ public class ImageController {
     private final ImageUploadingService imageUploadingService;
 
     @PostMapping("/upload")
-    public String upload(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    public String upload(@RequestParam("file") MultipartFile[] multipartFile) throws IOException {
         return imageUploadingService.upload(multipartFile);
     }
 }

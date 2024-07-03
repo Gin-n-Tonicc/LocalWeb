@@ -22,7 +22,7 @@ public interface UserService {
 
     void deleteUserById(UUID id, PublicUserDTO currentUser);
 
-    User processOAuthUser(CustomOAuth2User oAuth2User);
+    User processOAuthUser(CustomOAuth2User oAuth2User) throws Exception;
 
     User updateOAuth2UserWithFullData(CompleteOAuthRequest request, UUID userId);
 

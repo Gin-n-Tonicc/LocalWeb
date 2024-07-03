@@ -28,7 +28,12 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
 
         // Check if additional information is required after login
-        boolean isAdditionalInfoRequired = oAuth2AuthenticationService.processOAuthPostLogin(oauthUser, response::addCookie);
+        boolean isAdditionalInfoRequired = false;
+        try {
+            isAdditionalInfoRequired = oAuth2AuthenticationService.processOAuthPostLogin(oauthUser, response::addCookie);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         // Redirect users to appropriate URLs based on whether additional information is required
         if (isAdditionalInfoRequired) {

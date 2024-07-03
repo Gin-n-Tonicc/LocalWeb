@@ -11,9 +11,11 @@ import com.localWeb.localWeb.models.dto.auth.RegisterRequest;
 import com.localWeb.localWeb.models.dto.request.CompleteOAuthRequest;
 import com.localWeb.localWeb.models.entity.User;
 import com.localWeb.localWeb.models.entity.VerificationToken;
+import com.localWeb.localWeb.repositories.FileRepository;
 import com.localWeb.localWeb.repositories.UserRepository;
 import com.localWeb.localWeb.repositories.VerificationTokenRepository;
 import com.localWeb.localWeb.security.CustomOAuth2User;
+import com.localWeb.localWeb.services.FileService;
 import com.localWeb.localWeb.services.UserService;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -35,6 +38,8 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final MessageSource messageSource;
     private final VerificationTokenRepository verificationTokenRepository;
+    private final FileService fileService;
+    private final FileRepository fileRepository;
 
     /**
      * Creates a new user based on the provided registration request.
@@ -114,7 +119,7 @@ public class UserServiceImpl implements UserService {
      * @return The processed user.
      */
     @Override
-    public User processOAuthUser(CustomOAuth2User oAuth2User) {
+    public User processOAuthUser(CustomOAuth2User oAuth2User) throws Exception {
         User user = userRepository.findByEmail(oAuth2User.getEmail()).orElse(null);
 
         if (user == null) {
@@ -125,9 +130,15 @@ public class UserServiceImpl implements UserService {
             registerRequest.setEmail(oAuth2User.getEmail());
             registerRequest.setProvider(oAuth2User.getProvider());
 
-            if(oAuth2User.getProvider().equals(Provider.GOOGLE)) {
+            if (oAuth2User.getProvider().equals(Provider.GOOGLE)) {
                 registerRequest.setName(oAuth2User.getGivenName());
                 registerRequest.setSurname(oAuth2User.getFamilyName());
+
+                File file = fileService.downloadImageFromURL(oAuth2User.getPicture());
+                com.localWeb.localWeb.models.entity.File avatar = fileService.uploadFile(file, oAuth2User.getName() + ".png");
+
+                registerRequest.setAvatarId(avatar.getId());
+
             } else if (oAuth2User.getProvider().equals(Provider.FACEBOOK)) {
                 registerRequest.setName(oAuth2User.getName());
                 registerRequest.setSurname(SURNAME_PLACEHOLDER);
@@ -155,6 +166,7 @@ public class UserServiceImpl implements UserService {
 
     private User buildUser(RegisterRequest request) {
         boolean additionalInfoRequired = !request.getProvider().equals(Provider.LOCAL);
+        com.localWeb.localWeb.models.entity.File avatar = fileRepository.findByIdAndDeletedAtIsNull(request.getAvatarId());
 
         User.UserBuilder userBuilder = User
                 .builder()
@@ -163,6 +175,7 @@ public class UserServiceImpl implements UserService {
                 .email(request.getEmail())
                 .provider(request.getProvider())
                 .role(Role.USER)
+                .avatar(avatar)
                 .additionalInfoRequired(additionalInfoRequired);
 
         if (request.getPassword() != null) {

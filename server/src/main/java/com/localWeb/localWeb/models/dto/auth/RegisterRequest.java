@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
@@ -17,4 +19,5 @@ public class RegisterRequest extends CompleteOAuthRequest {
     private String password;
     private Provider provider = Provider.LOCAL;
     private Role role = Role.USER;
+    private UUID avatarId;
 }

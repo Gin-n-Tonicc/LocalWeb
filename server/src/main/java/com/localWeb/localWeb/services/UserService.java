@@ -8,7 +8,6 @@ import com.localWeb.localWeb.models.entity.User;
 import com.localWeb.localWeb.models.entity.VerificationToken;
 import com.localWeb.localWeb.security.CustomOAuth2User;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 

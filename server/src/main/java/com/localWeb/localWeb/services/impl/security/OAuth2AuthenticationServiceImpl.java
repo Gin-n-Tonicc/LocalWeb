@@ -10,7 +10,6 @@ import jakarta.servlet.http.Cookie;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.function.Consumer;
 
 /**

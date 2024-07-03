@@ -3,7 +3,6 @@ package com.localWeb.localWeb.models.dto.auth;
 import com.localWeb.localWeb.enums.Provider;
 import com.localWeb.localWeb.enums.Role;
 import com.localWeb.localWeb.models.dto.request.CompleteOAuthRequest;
-import com.localWeb.localWeb.models.entity.File;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

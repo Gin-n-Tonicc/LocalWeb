@@ -1,12 +1,10 @@
 package com.localWeb.localWeb.models.entity;
 
-import com.localWeb.localWeb.enums.FileType;
 import com.localWeb.localWeb.models.baseEntity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.springframework.http.MediaType;
 
 @Getter
 @Setter

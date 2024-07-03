@@ -3,7 +3,6 @@ package com.localWeb.localWeb.services;
 import com.localWeb.localWeb.security.CustomOAuth2User;
 import jakarta.servlet.http.Cookie;
 
-import java.io.IOException;
 import java.util.function.Consumer;
 
 public interface OAuth2AuthenticationService {

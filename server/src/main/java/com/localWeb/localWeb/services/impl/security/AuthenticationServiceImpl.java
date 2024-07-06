@@ -1,20 +1,18 @@
 package com.localWeb.localWeb.services.impl.security;
 
-import com.localWeb.localWeb.enums.AddressableType;
-import com.localWeb.localWeb.enums.PhonableType;
 import com.localWeb.localWeb.enums.TokenType;
-import com.localWeb.localWeb.exceptions.city.CityNotFoundException;
-import com.localWeb.localWeb.exceptions.country.CountryNotFoundException;
 import com.localWeb.localWeb.exceptions.token.InvalidTokenException;
 import com.localWeb.localWeb.exceptions.user.UserLoginException;
 import com.localWeb.localWeb.models.dto.auth.AuthenticationRequest;
 import com.localWeb.localWeb.models.dto.auth.AuthenticationResponse;
 import com.localWeb.localWeb.models.dto.auth.PublicUserDTO;
 import com.localWeb.localWeb.models.dto.auth.RegisterRequest;
-import com.localWeb.localWeb.models.dto.common.AddressDTO;
 import com.localWeb.localWeb.models.dto.request.CompleteOAuthRequest;
-import com.localWeb.localWeb.models.entity.*;
-import com.localWeb.localWeb.repositories.*;
+import com.localWeb.localWeb.models.entity.Token;
+import com.localWeb.localWeb.models.entity.User;
+import com.localWeb.localWeb.models.entity.VerificationToken;
+import com.localWeb.localWeb.repositories.UserRepository;
+import com.localWeb.localWeb.repositories.VerificationTokenRepository;
 import com.localWeb.localWeb.services.AuthenticationService;
 import com.localWeb.localWeb.services.JwtService;
 import com.localWeb.localWeb.services.TokenService;
@@ -32,7 +30,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Consumer;
 
 @Service
@@ -47,6 +44,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final VerificationTokenRepository verificationTokenRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
     /**
      * Registers a new user based on the provided registration request.
      */

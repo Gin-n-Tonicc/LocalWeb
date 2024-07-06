@@ -1,6 +1,5 @@
 package com.localWeb.localWeb.models.entity;
 
-import com.localWeb.localWeb.enums.AddressableType;
 import com.localWeb.localWeb.enums.PhonableType;
 import com.localWeb.localWeb.models.baseEntity.BaseEntity;
 import jakarta.persistence.*;

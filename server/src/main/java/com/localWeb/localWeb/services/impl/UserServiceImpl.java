@@ -192,8 +192,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void setPhoneNumberForUser(RegisterRequest request, User user){
-        Phone phone  = new Phone();
+    public void setPhoneNumberForUser(RegisterRequest request, User user) {
+        Phone phone = new Phone();
         Country country = countryRepository.findByIdAndDeletedAtIsNull(request.getPhone().getCountry()).orElseThrow(() -> new CountryNotFoundException(messageSource));
         phone.setCountry(country);
         phone.setNumber(request.getPhone().getNumber());

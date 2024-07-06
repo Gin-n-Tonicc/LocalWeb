@@ -3,7 +3,6 @@ package com.localWeb.localWeb.services;
 import com.localWeb.localWeb.models.dto.auth.AdminUserDTO;
 import com.localWeb.localWeb.models.dto.auth.PublicUserDTO;
 import com.localWeb.localWeb.models.dto.auth.RegisterRequest;
-import com.localWeb.localWeb.models.dto.common.AddressDTO;
 import com.localWeb.localWeb.models.dto.request.CompleteOAuthRequest;
 import com.localWeb.localWeb.models.entity.User;
 import com.localWeb.localWeb.models.entity.VerificationToken;

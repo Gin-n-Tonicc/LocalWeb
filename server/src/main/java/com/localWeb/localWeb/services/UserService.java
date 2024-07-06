@@ -32,7 +32,7 @@ public interface UserService {
 
     VerificationToken getVerificationToken(String VerificationToken);
 
-    void setAddressesForUser(RegisterRequest request, User user);
+    void setAddressesForUser(CompleteOAuthRequest request, User user);
 
-    void setPhoneNumberForUser(RegisterRequest request, User user);
+    void setPhoneNumberForUser(CompleteOAuthRequest request, User user);
 }

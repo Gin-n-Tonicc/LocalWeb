@@ -70,6 +70,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse completeOAuth2(CompleteOAuthRequest request, PublicUserDTO currentLoggedUser) {
         User updatedUser = userService.updateOAuth2UserWithFullData(request, currentLoggedUser.getId());
+
+        userService.setAddressesForUser(request, updatedUser);
+        userService.setPhoneNumberForUser(request, updatedUser);
+
         return tokenService.generateAuthResponse(updatedUser);
     }
 

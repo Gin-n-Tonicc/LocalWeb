@@ -177,7 +177,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void setAddressesForUser(RegisterRequest request, User user) {
+    public void setAddressesForUser(CompleteOAuthRequest request, User user) {
         // Handle primary address
         if (request.getPrimaryAddress() != null) {
             AddressDTO primaryAddress = request.getPrimaryAddress();
@@ -192,7 +192,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void setPhoneNumberForUser(RegisterRequest request, User user) {
+    public void setPhoneNumberForUser(CompleteOAuthRequest request, User user) {
         Phone phone = new Phone();
         Country country = countryRepository.findByIdAndDeletedAtIsNull(request.getPhone().getCountry()).orElseThrow(() -> new CountryNotFoundException(messageSource));
         phone.setCountry(country);

@@ -69,7 +69,8 @@ public class SecurityConfiguration {
                         "/webjars/**",
                         "/swagger-ui.html",
                         "/oauth/**",
-                        "/api/v1/countries/**"
+                        "/api/v1/countries/**",
+                        "/api/v1/cities/**"
                 )
                 .permitAll()
 //                .requestMatchers(GET, "/api/v1/courses/**").permitAll()

@@ -6,6 +6,7 @@ import com.localWeb.localWeb.models.dto.common.CountryDTO;
 import com.localWeb.localWeb.models.entity.Country;
 import com.localWeb.localWeb.repositories.CountryRepository;
 import com.localWeb.localWeb.services.CountryService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,18 +17,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
+@RequiredArgsConstructor
 @Service
 public class CountryServiceImpl implements CountryService {
     private final CountryRepository countryRepository;
     private final ModelMapper modelMapper;
     private final MessageSource messageSource;
 
-    public CountryServiceImpl(CountryRepository countryRepository, ModelMapper modelMapper, MessageSource messageSource) {
-        this.countryRepository = countryRepository;
-        this.modelMapper = modelMapper;
-        this.messageSource = messageSource;
-    }
 
     @Override
     public List<CountryDTO> getAllCountries() {

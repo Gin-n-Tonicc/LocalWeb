@@ -29,7 +29,7 @@ public class CityController {
     }
 
     @Operation(summary = "Get all cities", description = "Retrieves a list of all cities")
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<CityResponse>> getAllCities() {
         return ResponseEntity.ok(cityService.getAllCities());
     }
@@ -44,7 +44,7 @@ public class CityController {
 
     @Operation(summary = "Create a new city", description = "Creates a new city")
     @ApiResponse(responseCode = "201", description = "City created", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CityResponse.class)))
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<CityResponse> createCity(@Valid @RequestBody CityRequest cityRequest) {
         CityResponse createdCity = cityService.createCity(cityRequest);
         return new ResponseEntity<>(createdCity, HttpStatus.CREATED);

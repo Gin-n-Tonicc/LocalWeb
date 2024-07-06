@@ -3,6 +3,7 @@ package com.localWeb.localWeb.services;
 import com.localWeb.localWeb.models.dto.auth.AdminUserDTO;
 import com.localWeb.localWeb.models.dto.auth.PublicUserDTO;
 import com.localWeb.localWeb.models.dto.auth.RegisterRequest;
+import com.localWeb.localWeb.models.dto.common.AddressDTO;
 import com.localWeb.localWeb.models.dto.request.CompleteOAuthRequest;
 import com.localWeb.localWeb.models.entity.User;
 import com.localWeb.localWeb.models.entity.VerificationToken;
@@ -31,4 +32,8 @@ public interface UserService {
     void createVerificationToken(User user, String token);
 
     VerificationToken getVerificationToken(String VerificationToken);
+
+    void setAddressesForUser(RegisterRequest request, User user);
+
+    void setPhoneNumberForUser(RegisterRequest request, User user);
 }

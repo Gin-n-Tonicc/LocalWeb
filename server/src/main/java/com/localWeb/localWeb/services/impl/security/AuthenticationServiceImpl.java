@@ -1,8 +1,10 @@
 package com.localWeb.localWeb.services.impl.security;
 
 import com.localWeb.localWeb.enums.AddressableType;
+import com.localWeb.localWeb.enums.PhonableType;
 import com.localWeb.localWeb.enums.TokenType;
 import com.localWeb.localWeb.exceptions.city.CityNotFoundException;
+import com.localWeb.localWeb.exceptions.country.CountryNotFoundException;
 import com.localWeb.localWeb.exceptions.token.InvalidTokenException;
 import com.localWeb.localWeb.exceptions.user.UserLoginException;
 import com.localWeb.localWeb.models.dto.auth.AuthenticationRequest;
@@ -12,10 +14,7 @@ import com.localWeb.localWeb.models.dto.auth.RegisterRequest;
 import com.localWeb.localWeb.models.dto.common.AddressDTO;
 import com.localWeb.localWeb.models.dto.request.CompleteOAuthRequest;
 import com.localWeb.localWeb.models.entity.*;
-import com.localWeb.localWeb.repositories.AddressRepository;
-import com.localWeb.localWeb.repositories.CityRepository;
-import com.localWeb.localWeb.repositories.UserRepository;
-import com.localWeb.localWeb.repositories.VerificationTokenRepository;
+import com.localWeb.localWeb.repositories.*;
 import com.localWeb.localWeb.services.AuthenticationService;
 import com.localWeb.localWeb.services.JwtService;
 import com.localWeb.localWeb.services.TokenService;
@@ -48,15 +47,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final VerificationTokenRepository verificationTokenRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AddressRepository addressRepository;
-    private final CityRepository cityRepository;
     /**
      * Registers a new user based on the provided registration request.
      */
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
         User user = userService.createUser(request);
-        setAddressesForUser(request, user);
+
+        try {
+            userService.setAddressesForUser(request, user);
+            userService.setPhoneNumberForUser(request, user);
+        } catch (Exception e) {
+            user.setDeletedAt(LocalDateTime.now());
+            userRepository.save(user);
+        }
+
         return tokenService.generateAuthResponse(user);
     }
 
@@ -217,43 +222,5 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
-    }
-
-    private void setAddressesForUser(RegisterRequest request, User user) {
-        // Handle primary address
-        if (request.getPrimaryAddress() != null) {
-            AddressDTO primaryAddress = request.getPrimaryAddress();
-            setAndSaveAddress(primaryAddress, user);
-        }
-
-        // Handle secondary address
-        if (request.getSecondaryAddress() != null) {
-            AddressDTO secondaryAddress = request.getSecondaryAddress();
-            setAndSaveAddress(secondaryAddress, user);
-        }
-    }
-
-    /**
-     * We use this method to map the AddressDTO to Address entity.
-     * The reason is that in Address we have polymorphic association,
-     * therefore the usual modelmapper doesn't work properly.
-     */
-    private void setAndSaveAddress(AddressDTO addressDTO, User user) {
-        addressDTO.setAddressableId(user.getId());
-        addressDTO.setAddressableType(AddressableType.USER);
-
-        City city = cityRepository.findById(addressDTO.getCityId())
-                .orElseThrow(() -> new CityNotFoundException(messageSource));
-
-        Address address = new Address();
-        address.setId(UUID.randomUUID());
-        address.setLine(addressDTO.getLine());
-        address.setLat(addressDTO.getLat());
-        address.setLng(addressDTO.getLng());
-        address.setCity(city);
-        address.setAddressable(user);
-        address.setAddressableType(AddressableType.USER);
-
-        addressRepository.save(address);
     }
 }

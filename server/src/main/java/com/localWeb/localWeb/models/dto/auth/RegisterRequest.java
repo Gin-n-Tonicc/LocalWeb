@@ -2,6 +2,7 @@ package com.localWeb.localWeb.models.dto.auth;
 
 import com.localWeb.localWeb.enums.Provider;
 import com.localWeb.localWeb.enums.Role;
+import com.localWeb.localWeb.models.dto.common.AddressDTO;
 import com.localWeb.localWeb.models.dto.request.CompleteOAuthRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,4 +21,7 @@ public class RegisterRequest extends CompleteOAuthRequest {
     private Provider provider = Provider.LOCAL;
     private Role role = Role.USER;
     private UUID avatarId;
+    // Address fields
+    private AddressDTO primaryAddress;
+    private AddressDTO secondaryAddress; // Nullable for the second address
 }

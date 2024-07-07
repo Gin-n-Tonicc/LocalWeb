@@ -49,7 +49,7 @@ public class CityServiceImpl implements CityService {
         City cityEntity = modelMapper.map(cityRequest, City.class);
         cityEntity.setCountry(country);
 
-        cityRepository.save(modelMapper.map(cityRequest, City.class));
+        cityRepository.save(cityEntity);
         return modelMapper.map(cityEntity, CityResponse.class);
     }
 

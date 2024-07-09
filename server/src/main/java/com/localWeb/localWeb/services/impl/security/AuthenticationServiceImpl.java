@@ -51,6 +51,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
         User user = userService.createUser(request);
+
+        try {
+            userService.setAddressesForUser(request, user);
+            userService.setPhoneNumberForUser(request, user);
+        } catch (Exception e) {
+            user.setDeletedAt(LocalDateTime.now());
+            userRepository.save(user);
+        }
+
         return tokenService.generateAuthResponse(user);
     }
 
@@ -61,6 +70,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse completeOAuth2(CompleteOAuthRequest request, PublicUserDTO currentLoggedUser) {
         User updatedUser = userService.updateOAuth2UserWithFullData(request, currentLoggedUser.getId());
+
+        userService.setAddressesForUser(request, updatedUser);
+        userService.setPhoneNumberForUser(request, updatedUser);
+
         return tokenService.generateAuthResponse(updatedUser);
     }
 

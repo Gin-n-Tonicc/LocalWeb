@@ -1,19 +1,21 @@
 package com.localWeb.localWeb.services.impl;
 
+import com.localWeb.localWeb.enums.AddressableType;
+import com.localWeb.localWeb.enums.PhonableType;
 import com.localWeb.localWeb.enums.Provider;
 import com.localWeb.localWeb.enums.Role;
+import com.localWeb.localWeb.exceptions.city.CityNotFoundException;
 import com.localWeb.localWeb.exceptions.common.AccessDeniedException;
+import com.localWeb.localWeb.exceptions.country.CountryNotFoundException;
 import com.localWeb.localWeb.exceptions.user.UserCreateException;
 import com.localWeb.localWeb.exceptions.user.UserNotFoundException;
 import com.localWeb.localWeb.models.dto.auth.AdminUserDTO;
 import com.localWeb.localWeb.models.dto.auth.PublicUserDTO;
 import com.localWeb.localWeb.models.dto.auth.RegisterRequest;
+import com.localWeb.localWeb.models.dto.common.AddressDTO;
 import com.localWeb.localWeb.models.dto.request.CompleteOAuthRequest;
-import com.localWeb.localWeb.models.entity.User;
-import com.localWeb.localWeb.models.entity.VerificationToken;
-import com.localWeb.localWeb.repositories.FileRepository;
-import com.localWeb.localWeb.repositories.UserRepository;
-import com.localWeb.localWeb.repositories.VerificationTokenRepository;
+import com.localWeb.localWeb.models.entity.*;
+import com.localWeb.localWeb.repositories.*;
 import com.localWeb.localWeb.security.CustomOAuth2User;
 import com.localWeb.localWeb.services.FileService;
 import com.localWeb.localWeb.services.UserService;
@@ -40,6 +42,10 @@ public class UserServiceImpl implements UserService {
     private final VerificationTokenRepository verificationTokenRepository;
     private final FileService fileService;
     private final FileRepository fileRepository;
+    private final AddressRepository addressRepository;
+    private final CityRepository cityRepository;
+    private final PhoneRepository phoneRepository;
+    private final CountryRepository countryRepository;
 
     /**
      * Creates a new user based on the provided registration request.
@@ -159,6 +165,43 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    @Override
+    public VerificationToken getVerificationToken(String VerificationToken) {
+        return verificationTokenRepository.findByToken(VerificationToken);
+    }
+
+    @Override
+    public void createVerificationToken(User user, String token) {
+        VerificationToken myToken = new VerificationToken(token, user);
+        verificationTokenRepository.save(myToken);
+    }
+
+    @Override
+    public void setAddressesForUser(CompleteOAuthRequest request, User user) {
+        // Handle primary address
+        if (request.getPrimaryAddress() != null) {
+            AddressDTO primaryAddress = request.getPrimaryAddress();
+            setAndSaveAddress(primaryAddress, user);
+        }
+
+        // Handle secondary address
+        if (request.getSecondaryAddress() != null) {
+            AddressDTO secondaryAddress = request.getSecondaryAddress();
+            setAndSaveAddress(secondaryAddress, user);
+        }
+    }
+
+    @Override
+    public void setPhoneNumberForUser(CompleteOAuthRequest request, User user) {
+        Phone phone = new Phone();
+        Country country = countryRepository.findByIdAndDeletedAtIsNull(request.getPhone().getCountry()).orElseThrow(() -> new CountryNotFoundException(messageSource));
+        phone.setCountry(country);
+        phone.setNumber(request.getPhone().getNumber());
+        phone.setPhonableType(PhonableType.USER);
+        phone.setPhoneable(user);
+        phoneRepository.save(phone);
+    }
+
     public User findById(UUID id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("id", messageSource));
@@ -185,14 +228,27 @@ public class UserServiceImpl implements UserService {
         return userBuilder.build();
     }
 
-    @Override
-    public VerificationToken getVerificationToken(String VerificationToken) {
-        return verificationTokenRepository.findByToken(VerificationToken);
-    }
+    /**
+     * We use this method to map the AddressDTO to Address entity.
+     * The reason is that in Address we have polymorphic association,
+     * therefore the usual modelmapper doesn't work properly.
+     */
+    private void setAndSaveAddress(AddressDTO addressDTO, User user) {
+        addressDTO.setAddressableId(user.getId());
+        addressDTO.setAddressableType(AddressableType.USER);
 
-    @Override
-    public void createVerificationToken(User user, String token) {
-        VerificationToken myToken = new VerificationToken(token, user);
-        verificationTokenRepository.save(myToken);
+        City city = cityRepository.findById(addressDTO.getCityId())
+                .orElseThrow(() -> new CityNotFoundException(messageSource));
+
+        Address address = new Address();
+        address.setId(UUID.randomUUID());
+        address.setLine(addressDTO.getLine());
+        address.setLat(addressDTO.getLat());
+        address.setLng(addressDTO.getLng());
+        address.setCity(city);
+        address.setAddressable(user);
+        address.setAddressableType(AddressableType.USER);
+
+        addressRepository.save(address);
     }
 }

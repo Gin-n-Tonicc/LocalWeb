@@ -31,4 +31,8 @@ public interface UserService {
     void createVerificationToken(User user, String token);
 
     VerificationToken getVerificationToken(String VerificationToken);
+
+    void setAddressesForUser(CompleteOAuthRequest request, User user);
+
+    void setPhoneNumberForUser(CompleteOAuthRequest request, User user);
 }

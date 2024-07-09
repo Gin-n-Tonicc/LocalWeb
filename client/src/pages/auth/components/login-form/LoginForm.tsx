@@ -8,7 +8,6 @@ import { useAuthContext } from '../../../../contexts/AuthContext';
 import { PageEnum } from '../../../../types/enums/PageEnum';
 import { IAuthResponse } from '../../../../types/interfaces/auth/IAuthResponse';
 import rocketImage from '../../img/rocket.png';
-import facebookIcon from './img/icons/facebook.svg';
 import googleIcon from './img/icons/google.svg';
 
 type Inputs = {
@@ -107,11 +106,6 @@ function LoginForm() {
       </form>
       <p className="lined-text">Login with your Social Account</p>
       <div className="social-links">
-        <a className="social-link facebook" href={oauth2Urls.facebook}>
-          <div className="facebook-icon">
-            <img src={facebookIcon} />
-          </div>
-        </a>
         <a className="social-link google" href={oauth2Urls.google}>
           <div className="google-icon">
             <img src={googleIcon} />

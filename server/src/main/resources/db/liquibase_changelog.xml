@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <include file="changelogs/001_files.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/002_categories.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/003_countries.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/004_cities.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/005_addresses.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/006_phones.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/007_organisations.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/008_lessons.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/009_users.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/010_tokens.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/011_verification_tokens.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/012_groups.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/013_posts.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/014_user_event_status.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/015_schedules.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/016_comments.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/017_events.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

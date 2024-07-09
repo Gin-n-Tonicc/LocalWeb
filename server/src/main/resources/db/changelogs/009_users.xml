@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+    <!-- ChangeSet for creating the users table -->
+    <changeSet id="1" author="LocalWeb">
+        <createTable tableName="users">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="file_id" type="UUID"/>
+
+            <column name="enabled" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="role" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="provider" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="is_additional_info_required" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="TIMESTAMP"/>
+
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

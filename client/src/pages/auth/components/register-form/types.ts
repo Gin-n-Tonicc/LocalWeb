@@ -4,6 +4,12 @@ export enum StepperEnum {
   __LENGTH,
 }
 
+export interface IStepperState {
+  currentStep: StepperEnum;
+  [StepperEnum.GENERAL]?: IGeneralStepper;
+  [StepperEnum.ADDITIONAL_INFO]?: IAdditionalStepper;
+}
+
 export interface IGeneralStepper {
   email: string;
   name: string;

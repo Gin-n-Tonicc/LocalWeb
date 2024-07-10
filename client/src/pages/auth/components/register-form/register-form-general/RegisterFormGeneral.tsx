@@ -4,7 +4,7 @@ import FormInput from '../../../../../components/common/form-input/FormInput';
 import { IGeneralStepper, IGeneralStepperForm } from '../types';
 
 interface RegisterFormGeneralProps {
-  handleStep: (v: IGeneralStepper) => void;
+  nextStep: (v: IGeneralStepper) => void;
 }
 
 function RegisterFormGeneral(props: RegisterFormGeneralProps) {
@@ -58,7 +58,7 @@ function RegisterFormGeneral(props: RegisterFormGeneralProps) {
 
     console.log(dataFinish);
 
-    props.handleStep(dataFinish);
+    props.nextStep(dataFinish);
   };
 
   return (
@@ -121,7 +121,7 @@ function RegisterFormGeneral(props: RegisterFormGeneralProps) {
         </div>
         <div className="form-row">
           <div className="form-item d-flex align-content-center justify-content-end">
-            <button className="button medium primary" style={{ width: '50%' }}>
+            <button className="button medium primary" style={{ width: '45%' }}>
               Next
             </button>
           </div>

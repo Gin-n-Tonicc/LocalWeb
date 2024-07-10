@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import PhoneInput from 'react-phone-number-input';
+import PhoneInput, { Country } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import FormInput from '../../../../../components/common/form-input/FormInput';
 import SelectInput, {
@@ -8,11 +8,12 @@ import SelectInput, {
 } from '../../../../../components/common/select-input/SelectInput';
 import { ICity } from '../../../../../types/interfaces/location/ICity';
 import { ICountry } from '../../../../../types/interfaces/location/ICountry';
-import { AdditionalStepperForm } from '../types';
+import { AdditionalStepperForm, IAdditionalStepper } from '../types';
 
 interface RegisterFormAdditionalProps {
   cities: ICity[];
   countries: ICountry[];
+  previousStep: (v: IAdditionalStepper) => void;
 }
 
 function RegisterFormAdditional(props: RegisterFormAdditionalProps) {
@@ -37,18 +38,43 @@ function RegisterFormAdditional(props: RegisterFormAdditionalProps) {
     mode: 'onChange',
   });
 
+  const handleOptionChange = (
+    key: keyof AdditionalStepperForm,
+    vFromInput: string | undefined
+  ): void => {
+    const v = vFromInput?.toString() || '';
+
+    setValue(key, v, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+  };
+
   // Handle form submission
-  const onSubmit: SubmitHandler<AdditionalStepperForm> = async (data) => {};
+  const onSubmit: SubmitHandler<AdditionalStepperForm> = async (data) => {
+    const dataFinish: IAdditionalStepper = {
+      primaryAddress: {
+        line: data.line.trim(),
+        cityId: data.cityId.trim(),
+      },
+      phone: {
+        country: '',
+        number: data.number,
+      },
+    };
+
+    console.log(dataFinish);
+
+    props.previousStep(dataFinish);
+  };
 
   const cities: SelectOption[] = props.cities.map((x) => ({
     value: x.id,
     label: `${x.name}, ${x.country.name}`,
   }));
 
-  const countries: SelectOption[] = props.countries.map((x) => ({
-    value: x.phoneCode,
-    label: x.name,
-  }));
+  const countries: Country[] = props.countries.map((x) => x.alpha2 as Country);
 
   return (
     <>
@@ -58,14 +84,10 @@ function RegisterFormAdditional(props: RegisterFormAdditionalProps) {
             <SelectInput
               placeholder="Select your town"
               options={cities}
-              onOptionChange={() => {}}
+              onOptionChange={(v) => handleOptionChange('cityId', v)}
             />
           </div>
-          <PhoneInput
-            placeholder="Enter phone number"
-            value={value}
-            onChange={setValue2}
-          />
+
           <div className="form-item">
             <FormInput
               control={control}
@@ -77,28 +99,24 @@ function RegisterFormAdditional(props: RegisterFormAdditionalProps) {
           </div>
         </div>
         <div className="form-row">
-          <div className="form-item mb-2">
-            <SelectInput
-              placeholder="Select your country"
-              options={countries}
-              onOptionChange={() => {}}
-            />
-          </div>
-          <div className="form-item">
-            <FormInput
-              control={control}
-              type="text"
-              placeholder="Your city 2"
-              id="register-city2"
-              name="cityId2"
+          <div className="form-item ml-2 mb-5">
+            <PhoneInput
+              defaultCountry="BG"
+              countryCallingCodeEditable={false}
+              countries={countries}
+              placeholder="Enter phone number"
+              onChange={(v) => handleOptionChange('number', v)}
             />
           </div>
         </div>
 
         <div className="form-row">
-          <div className="form-item d-flex align-content-center justify-content-end">
-            <button className="button medium primary" style={{ width: '50%' }}>
-              Next
+          <div className="form-item d-flex align-content-center justify-content-between">
+            <button className="button medium primary" style={{ width: '45%' }}>
+              Previous
+            </button>
+            <button className="button medium primary" style={{ width: '45%' }}>
+              Submit
             </button>
           </div>
         </div>

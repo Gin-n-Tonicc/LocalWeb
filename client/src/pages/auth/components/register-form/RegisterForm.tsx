@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useMemo, useState } from 'react';
 import { useFetch } from 'use-http';
 import { cityUrls } from '../../../../api/location/city';
 import { countryUrls } from '../../../../api/location/country';
@@ -8,15 +7,7 @@ import { ICountry } from '../../../../types/interfaces/location/ICountry';
 import rocketImage from '../../img/rocket.png';
 import RegisterFormAdditional from './register-form-additional/RegisterFormAdditional';
 import RegisterFormGeneral from './register-form-general/RegisterFormGeneral';
-import { IGeneralStepper, PossibleStepperDTO, StepperEnum } from './types';
-
-type Inputs = { repeatPassword: string; password: string };
-
-interface IStepperState {
-  currentStep: StepperEnum;
-  [StepperEnum.GENERAL]?: IGeneralStepper;
-  [StepperEnum.ADDITIONAL_INFO]?: {};
-}
+import { IStepperState, PossibleStepperDTO, StepperEnum } from './types';
 
 function RegisterForm() {
   const [stepperState, setStepperState] = useState<IStepperState>({
@@ -26,90 +17,77 @@ function RegisterForm() {
   const { data: cities } = useFetch<ICity[]>(cityUrls.fetchAll, []);
   const { data: countries } = useFetch<ICountry[]>(countryUrls.fetchAll, []);
 
-  console.log({ cities, countries });
-
-  const {
-    handleSubmit,
-    control,
-    reset,
-    watch,
-    setError,
-    clearErrors,
-    setValue,
-    formState: { errors },
-  } = useForm<Inputs>({
-    defaultValues: {
-      password: '',
-      repeatPassword: '',
-    },
-    mode: 'onChange',
-  });
-
-  const formValues = watch();
-
   // Handle form submission
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // Register user
-    // await post({
-    //   name: data.firstName.trim(),
-    //   surname: data.surName.trim(),
-    //   email: data.email.trim(),
-    //   password: data.password.trim(),
-    // });
-    // Reset form, show a message that an email is sent
-    // if (response.ok) {
-    //   reset();
-    //   // TODO: Identify user that an email has been sent to him to verify his account
-    // }
-  };
+  // const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  // Register user
+  // await post({
+  //   name: data.firstName.trim(),
+  //   surname: data.surName.trim(),
+  //   email: data.email.trim(),
+  //   password: data.password.trim(),
+  // });
+  // Reset form, show a message that an email is sent
+  // if (response.ok) {
+  //   reset();
+  //   // TODO: Identify user that an email has been sent to him to verify his account
+  // }
+  // };
 
-  useEffect(() => {
-    const areEqual = formValues.password === formValues.repeatPassword;
-    const hasError = Boolean(errors.repeatPassword);
-    const hasManualError = hasError && errors.repeatPassword?.type === 'manual';
+  // useEffect(() => {
+  //   const areEqual = formValues.password === formValues.repeatPassword;
+  //   const hasError = Boolean(errors.repeatPassword);
+  //   const hasManualError = hasError && errors.repeatPassword?.type === 'manual';
 
-    if (!hasError && !areEqual) {
-      setError('repeatPassword', {
-        type: 'manual',
-        message: 'Passwords did not match',
-      });
-    }
+  //   if (!hasError && !areEqual) {
+  //     setError('repeatPassword', {
+  //       type: 'manual',
+  //       message: 'Passwords did not match',
+  //     });
+  //   }
 
-    if (hasManualError && areEqual) {
-      clearErrors('repeatPassword');
-    }
-  }, [errors, formValues, setError, clearErrors]);
+  //   if (hasManualError && areEqual) {
+  //     clearErrors('repeatPassword');
+  //   }
+  // }, [errors, formValues, setError, clearErrors]);
 
   console.log(stepperState);
 
-  const handleStep = (data: PossibleStepperDTO) => {
-    if (
-      stepperState.currentStep >= 0 &&
-      stepperState.currentStep < StepperEnum.__LENGTH - 1
-    ) {
-      setStepperState((prev) => ({
+  const handleStep = (data: PossibleStepperDTO, step: number) => {
+    setStepperState((prev) => {
+      let updatedStep = prev.currentStep + step;
+
+      if (updatedStep < 0) {
+        updatedStep = 0;
+      } else if (updatedStep >= StepperEnum.__LENGTH) {
+        updatedStep = StepperEnum.__LENGTH - 1;
+      }
+
+      return {
         ...prev,
         [prev.currentStep]: data,
-        currentStep: prev.currentStep + 1,
-      }));
-    } else {
-      setStepperState((prev) => ({
-        ...prev,
-        [prev.currentStep]: data,
-        currentStep: prev.currentStep - 1,
-      }));
-    }
+        currentStep: updatedStep,
+      };
+    });
+  };
+
+  const previousStep = (data: PossibleStepperDTO) => {
+    handleStep(data, -1);
+  };
+
+  const nextStep = (data: PossibleStepperDTO) => {
+    handleStep(data, 1);
   };
 
   const stepperEnumToComponentMap = useMemo(
     () =>
       new Map<number, JSX.Element>([
-        [StepperEnum.GENERAL, <RegisterFormGeneral handleStep={handleStep} />],
+        [StepperEnum.GENERAL, <RegisterFormGeneral nextStep={nextStep} />],
         [
           StepperEnum.ADDITIONAL_INFO,
           <RegisterFormAdditional
             cities={cities || []}
             countries={countries || []}
+            previousStep={previousStep}
           />,
         ],
       ]),

@@ -19,7 +19,6 @@ function SelectInput(props: SelectInputProps) {
     <>
       <Select
         value={props.value}
-        inputId="category-select"
         name="category-select"
         placeholder={props.placeholder}
         options={props.options}

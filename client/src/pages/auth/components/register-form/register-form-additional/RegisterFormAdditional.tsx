@@ -1,14 +1,23 @@
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
 import FormInput from '../../../../../components/common/form-input/FormInput';
-import SelectInput from '../../../../../components/common/select-input/SelectInput';
+import SelectInput, {
+  SelectOption,
+} from '../../../../../components/common/select-input/SelectInput';
 import { ICity } from '../../../../../types/interfaces/location/ICity';
+import { ICountry } from '../../../../../types/interfaces/location/ICountry';
 import { AdditionalStepperForm } from '../types';
 
 interface RegisterFormAdditionalProps {
   cities: ICity[];
+  countries: ICountry[];
 }
 
 function RegisterFormAdditional(props: RegisterFormAdditionalProps) {
+  const [value, setValue2] = useState<any>('');
+
   const {
     handleSubmit,
     control,
@@ -31,6 +40,16 @@ function RegisterFormAdditional(props: RegisterFormAdditionalProps) {
   // Handle form submission
   const onSubmit: SubmitHandler<AdditionalStepperForm> = async (data) => {};
 
+  const cities: SelectOption[] = props.cities.map((x) => ({
+    value: x.id,
+    label: `${x.name}, ${x.country.name}`,
+  }));
+
+  const countries: SelectOption[] = props.countries.map((x) => ({
+    value: x.phoneCode,
+    label: x.name,
+  }));
+
   return (
     <>
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
@@ -38,13 +57,15 @@ function RegisterFormAdditional(props: RegisterFormAdditionalProps) {
           <div className="form-item mb-2">
             <SelectInput
               placeholder="Select your town"
-              options={props.cities.map((x) => ({
-                value: x.id,
-                label: `${x.name}, ${x.country.name}`,
-              }))}
+              options={cities}
               onOptionChange={() => {}}
             />
           </div>
+          <PhoneInput
+            placeholder="Enter phone number"
+            value={value}
+            onChange={setValue2}
+          />
           <div className="form-item">
             <FormInput
               control={control}
@@ -56,13 +77,11 @@ function RegisterFormAdditional(props: RegisterFormAdditionalProps) {
           </div>
         </div>
         <div className="form-row">
-          <div className="form-item">
-            <FormInput
-              control={control}
-              type="text"
-              placeholder="Your address 2"
-              id="register-address2"
-              name="line2"
+          <div className="form-item mb-2">
+            <SelectInput
+              placeholder="Select your country"
+              options={countries}
+              onOptionChange={() => {}}
             />
           </div>
           <div className="form-item">

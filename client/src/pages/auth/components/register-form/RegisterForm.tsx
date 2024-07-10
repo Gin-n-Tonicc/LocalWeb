@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useFetch } from 'use-http';
-import { cityUrls } from '../../../../api/address/city';
-import { authUrls } from '../../../../api/auth/auth';
-import { IUser } from '../../../../types/interfaces/auth/IUser';
+import { cityUrls } from '../../../../api/location/city';
+import { countryUrls } from '../../../../api/location/country';
 import { ICity } from '../../../../types/interfaces/location/ICity';
+import { ICountry } from '../../../../types/interfaces/location/ICountry';
 import rocketImage from '../../img/rocket.png';
 import RegisterFormAdditional from './register-form-additional/RegisterFormAdditional';
 import RegisterFormGeneral from './register-form-general/RegisterFormGeneral';
@@ -24,9 +24,9 @@ function RegisterForm() {
   });
 
   const { data: cities } = useFetch<ICity[]>(cityUrls.fetchAll, []);
-  console.log(cities);
+  const { data: countries } = useFetch<ICountry[]>(countryUrls.fetchAll, []);
 
-  const { post, response, loading } = useFetch<IUser>(authUrls.register);
+  console.log({ cities, countries });
 
   const {
     handleSubmit,
@@ -56,12 +56,11 @@ function RegisterForm() {
     //   email: data.email.trim(),
     //   password: data.password.trim(),
     // });
-
     // Reset form, show a message that an email is sent
-    if (response.ok) {
-      reset();
-      // TODO: Identify user that an email has been sent to him to verify his account
-    }
+    // if (response.ok) {
+    //   reset();
+    //   // TODO: Identify user that an email has been sent to him to verify his account
+    // }
   };
 
   useEffect(() => {
@@ -108,7 +107,10 @@ function RegisterForm() {
         [StepperEnum.GENERAL, <RegisterFormGeneral handleStep={handleStep} />],
         [
           StepperEnum.ADDITIONAL_INFO,
-          <RegisterFormAdditional cities={cities || []} />,
+          <RegisterFormAdditional
+            cities={cities || []}
+            countries={countries || []}
+          />,
         ],
       ]),
     [handleStep]

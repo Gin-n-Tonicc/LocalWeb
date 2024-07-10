@@ -10,7 +10,7 @@ interface SelectInputProps {
   options: SelectOption[];
   onOptionChange: (v: string | undefined) => void;
   placeholder?: string;
-  value?: SingleValue<SelectOption>;
+  defaultValue?: SingleValue<SelectOption>;
 }
 
 // The component that displays a dropdown with values based on the props
@@ -18,7 +18,7 @@ function SelectInput(props: SelectInputProps) {
   return (
     <>
       <Select
-        value={props.value}
+        defaultValue={props.defaultValue}
         name="category-select"
         placeholder={props.placeholder}
         options={props.options}

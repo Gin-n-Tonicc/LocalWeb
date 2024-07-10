@@ -1,13 +1,21 @@
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import FormInput from '../../../../../components/common/form-input/FormInput';
-import { IGeneralStepper, IGeneralStepperForm } from '../types';
+import {
+  IGeneralStepper,
+  IGeneralStepperForm,
+  StepperButtonEnum,
+} from '../types';
 
 interface RegisterFormGeneralProps {
+  currentState: IGeneralStepper;
   nextStep: (v: IGeneralStepper) => void;
 }
 
-function RegisterFormGeneral(props: RegisterFormGeneralProps) {
+function RegisterFormGeneral({
+  currentState,
+  nextStep,
+}: RegisterFormGeneralProps) {
   const {
     handleSubmit,
     control,
@@ -19,11 +27,11 @@ function RegisterFormGeneral(props: RegisterFormGeneralProps) {
     formState: { errors },
   } = useForm<IGeneralStepperForm>({
     defaultValues: {
-      name: '',
-      surname: '',
-      email: '',
-      password: '',
-      repeatPassword: '',
+      name: currentState.name,
+      surname: currentState.surname,
+      email: currentState.email,
+      password: currentState.password,
+      repeatPassword: currentState.repeatPassword,
     },
     mode: 'onChange',
   });
@@ -54,11 +62,10 @@ function RegisterFormGeneral(props: RegisterFormGeneralProps) {
       surname: data.surname.trim(),
       email: data.email.trim(),
       password: data.password.trim(),
+      repeatPassword: data.repeatPassword.trim(),
     };
 
-    console.log(dataFinish);
-
-    props.nextStep(dataFinish);
+    nextStep(dataFinish);
   };
 
   return (
@@ -121,7 +128,10 @@ function RegisterFormGeneral(props: RegisterFormGeneralProps) {
         </div>
         <div className="form-row">
           <div className="form-item d-flex align-content-center justify-content-end">
-            <button className="button medium primary" style={{ width: '45%' }}>
+            <button
+              className="button medium primary"
+              style={{ width: '45%' }}
+              data-button-type={StepperButtonEnum.NEXT}>
               Next
             </button>
           </div>

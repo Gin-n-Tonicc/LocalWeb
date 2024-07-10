@@ -9,48 +9,45 @@ import RegisterFormAdditional from './register-form-additional/RegisterFormAddit
 import RegisterFormGeneral from './register-form-general/RegisterFormGeneral';
 import { IStepperState, PossibleStepperDTO, StepperEnum } from './types';
 
+const DEFAULT_STEPPER_STATE: IStepperState = {
+  currentStep: 0,
+  [StepperEnum.GENERAL]: {
+    email: '',
+    name: '',
+    surname: '',
+    password: '',
+    repeatPassword: '',
+  },
+  [StepperEnum.ADDITIONAL_INFO]: {
+    primaryAddress: {
+      line: '',
+      cityId: '',
+    },
+    phone: {
+      country: '',
+      number: '',
+    },
+  },
+};
+
 function RegisterForm() {
-  const [stepperState, setStepperState] = useState<IStepperState>({
-    currentStep: 0,
-  });
+  const [stepperState, setStepperState] = useState(DEFAULT_STEPPER_STATE);
 
   const { data: cities } = useFetch<ICity[]>(cityUrls.fetchAll, []);
   const { data: countries } = useFetch<ICountry[]>(countryUrls.fetchAll, []);
 
-  // Handle form submission
-  // const onSubmit: SubmitHandler<Inputs> = async (data) => {
-  // Register user
-  // await post({
-  //   name: data.firstName.trim(),
-  //   surname: data.surName.trim(),
-  //   email: data.email.trim(),
-  //   password: data.password.trim(),
-  // });
-  // Reset form, show a message that an email is sent
-  // if (response.ok) {
-  //   reset();
-  //   // TODO: Identify user that an email has been sent to him to verify his account
-  // }
-  // };
+  const handleSubmit = (data: PossibleStepperDTO) => {
+    const stepperValue = { ...stepperState, [stepperState.currentStep]: data };
+    const { repeatPassword, ...generalStepperValue } =
+      stepperValue[StepperEnum.GENERAL];
 
-  // useEffect(() => {
-  //   const areEqual = formValues.password === formValues.repeatPassword;
-  //   const hasError = Boolean(errors.repeatPassword);
-  //   const hasManualError = hasError && errors.repeatPassword?.type === 'manual';
+    const body = {
+      ...generalStepperValue,
+      ...stepperValue[StepperEnum.ADDITIONAL_INFO],
+    };
 
-  //   if (!hasError && !areEqual) {
-  //     setError('repeatPassword', {
-  //       type: 'manual',
-  //       message: 'Passwords did not match',
-  //     });
-  //   }
-
-  //   if (hasManualError && areEqual) {
-  //     clearErrors('repeatPassword');
-  //   }
-  // }, [errors, formValues, setError, clearErrors]);
-
-  console.log(stepperState);
+    console.log({ body });
+  };
 
   const handleStep = (data: PossibleStepperDTO, step: number) => {
     setStepperState((prev) => {
@@ -81,17 +78,25 @@ function RegisterForm() {
   const stepperEnumToComponentMap = useMemo(
     () =>
       new Map<number, JSX.Element>([
-        [StepperEnum.GENERAL, <RegisterFormGeneral nextStep={nextStep} />],
+        [
+          StepperEnum.GENERAL,
+          <RegisterFormGeneral
+            nextStep={nextStep}
+            currentState={stepperState[StepperEnum.GENERAL]}
+          />,
+        ],
         [
           StepperEnum.ADDITIONAL_INFO,
           <RegisterFormAdditional
             cities={cities || []}
             countries={countries || []}
             previousStep={previousStep}
+            submit={handleSubmit}
+            currentState={stepperState[StepperEnum.ADDITIONAL_INFO]}
           />,
         ],
       ]),
-    [handleStep]
+    [stepperState, countries, cities, nextStep, previousStep, handleSubmit]
   );
 
   return (

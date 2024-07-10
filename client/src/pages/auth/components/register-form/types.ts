@@ -1,3 +1,9 @@
+export enum StepperButtonEnum {
+  PREVIOUS = 'PREVIOUS',
+  NEXT = 'NEXT',
+  SUBMIT = 'SUBMIT',
+}
+
 export enum StepperEnum {
   GENERAL,
   ADDITIONAL_INFO,
@@ -6,8 +12,8 @@ export enum StepperEnum {
 
 export interface IStepperState {
   currentStep: StepperEnum;
-  [StepperEnum.GENERAL]?: IGeneralStepper;
-  [StepperEnum.ADDITIONAL_INFO]?: IAdditionalStepper;
+  [StepperEnum.GENERAL]: IGeneralStepper;
+  [StepperEnum.ADDITIONAL_INFO]: IAdditionalStepper;
 }
 
 export interface IGeneralStepper {
@@ -15,11 +21,10 @@ export interface IGeneralStepper {
   name: string;
   surname: string;
   password: string;
-}
-
-export interface IGeneralStepperForm extends IGeneralStepper {
   repeatPassword: string;
 }
+
+export interface IGeneralStepperForm extends IGeneralStepper {}
 
 export interface IAdditionalStepper {
   primaryAddress: {

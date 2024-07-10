@@ -16,7 +16,13 @@ enum FormInputStateClasses {
 // Custom form input attached to the controller (form)
 function FormInput(props: FormInputProps) {
   const { field, fieldState } = useController(props);
-  const [className, setClassName] = useState(FormInputStateClasses.ONBLUR);
+  const [className, setClassName] = useState(() => {
+    if (field.value?.toString() === '') {
+      return FormInputStateClasses.ONBLUR;
+    }
+
+    return FormInputStateClasses.ONFOCUS;
+  });
 
   const onFocus = () => {
     setClassName(FormInputStateClasses.ONFOCUS);
@@ -25,7 +31,7 @@ function FormInput(props: FormInputProps) {
   const onBlur: FocusEventHandler<HTMLInputElement> = (e) => {
     const input = e.currentTarget;
 
-    if (input.value.trim() == '') {
+    if (input.value.trim() === '') {
       setClassName(FormInputStateClasses.ONBLUR);
     }
   };

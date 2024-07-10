@@ -70,7 +70,8 @@ public class SecurityConfiguration {
                         "/swagger-ui.html",
                         "/oauth/**",
                         "/api/v1/countries/**",
-                        "/api/v1/cities/**"
+                        "/api/v1/cities/**",
+                        "/api/v1/organisations/**"
                 )
                 .permitAll()
 //                .requestMatchers(GET, "/api/v1/courses/**").permitAll()

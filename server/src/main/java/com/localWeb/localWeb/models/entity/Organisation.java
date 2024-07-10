@@ -1,6 +1,7 @@
 package com.localWeb.localWeb.models.entity;
 
 import com.localWeb.localWeb.models.baseEntity.BaseEntity;
+import com.localWeb.localWeb.utils.SlugUtils;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -36,11 +37,34 @@ public class Organisation extends BaseEntity {
 
     private String websiteUrl;
 
-    @ManyToMany(mappedBy = "organisations")
-    @ToString.Exclude
-    private Set<User> users = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "file_id")
+    private File profileImage;
 
-    @OneToMany(mappedBy = "phoneable", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany
+    @JoinTable(
+            name = "organisation_members",
+            joinColumns = @JoinColumn(name = "organisation_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     @ToString.Exclude
-    private Set<Phone> phones = new HashSet<>();
+    private Set<User> members = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "organisation_owners",
+            joinColumns = @JoinColumn(name = "organisation_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    @ToString.Exclude
+    private Set<User> owners = new HashSet<>();
+
+    @OneToMany(mappedBy = "id")
+    private Set<File> files = new HashSet<>();
+
+    @PrePersist
+    @PreUpdate
+    private void updateSlug() {
+        this.slug = SlugUtils.generateSlug(this.name);
+    }
 }

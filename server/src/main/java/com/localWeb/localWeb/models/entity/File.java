@@ -1,10 +1,12 @@
 package com.localWeb.localWeb.models.entity;
 
 import com.localWeb.localWeb.models.baseEntity.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter

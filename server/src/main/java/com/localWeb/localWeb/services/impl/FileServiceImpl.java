@@ -56,6 +56,7 @@ public class FileServiceImpl implements FileService {
     public com.localWeb.localWeb.models.entity.File uploadFile(File file, String fileName) throws IOException {
         String extension = getExtension(fileName);
         System.out.println("EXTENSION " + extension);
+
         if (!FileType.isSupportedExtension(extension) && !(extension.startsWith(".com"))) {
             throw new UnsupportedFileTypeException(messageSource);
         }

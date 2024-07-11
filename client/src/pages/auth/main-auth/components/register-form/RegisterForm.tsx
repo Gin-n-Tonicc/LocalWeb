@@ -7,7 +7,7 @@ import { useToastContext } from '../../../../../contexts/ToastContext';
 import { IAuthResponse } from '../../../../../types/interfaces/auth/IAuthResponse';
 import { ICity } from '../../../../../types/interfaces/location/ICity';
 import { ICountry } from '../../../../../types/interfaces/location/ICountry';
-import rocketImage from '../../img/rocket.png';
+import rocketImage from '../../../img/rocket.png';
 import RegisterFormAdditional from './register-form-additional/RegisterFormAdditional';
 import RegisterFormGeneral from './register-form-general/RegisterFormGeneral';
 import { IStepperState, PossibleStepperDTO, StepperEnum } from './types';

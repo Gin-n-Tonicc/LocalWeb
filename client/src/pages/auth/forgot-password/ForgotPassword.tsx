@@ -1,4 +1,6 @@
+import '../Auth.scss';
 import AuthTabSwitch from '../components/auth-tab-switch/AuthTabSwitch';
+import ForgotPasswordForm from './forgot-password-form/ForgotPasswordForm';
 
 function ForgotPassword() {
   return (
@@ -17,7 +19,7 @@ function ForgotPassword() {
           <AuthTabSwitch />
         </div>
         <div className="landing-form">
-          {/* {pathComponentMap.get(location.pathname)} */}
+          <ForgotPasswordForm />
         </div>
       </div>
     </>

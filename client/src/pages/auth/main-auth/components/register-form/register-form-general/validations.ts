@@ -1,5 +1,5 @@
 import { RegisterOptions } from 'react-hook-form';
-import { PASSWORD_VALIDATIONS } from '../../../validations-common';
+import { PASSWORD_VALIDATIONS } from '../../../../validations-common';
 
 export const REPEAT_PASSWORD_VALIDATIONS = (
   password: string

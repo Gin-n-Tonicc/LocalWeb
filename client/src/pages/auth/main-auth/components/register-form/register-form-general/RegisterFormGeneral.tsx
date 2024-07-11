@@ -3,7 +3,7 @@ import FormInput from '../../../../../../components/common/form-input/FormInput'
 import {
   EMAIL_VALIDATIONS,
   PASSWORD_VALIDATIONS,
-} from '../../../validations-common';
+} from '../../../../validations-common';
 import {
   IGeneralStepper,
   IGeneralStepperForm,
@@ -106,7 +106,7 @@ function RegisterFormGeneral({
             control={control}
             type="password"
             placeholder="Repeat Password"
-            id="login-repeat-password"
+            id="register-repeat-password"
             name="repeatPassword"
             rules={REPEAT_PASSWORD_VALIDATIONS(watch('password'))}
           />

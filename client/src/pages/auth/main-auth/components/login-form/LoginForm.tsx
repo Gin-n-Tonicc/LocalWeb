@@ -1,12 +1,12 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFetch } from 'use-http';
-import { oauth2Urls } from '../../../../api';
-import { authUrls } from '../../../../api/auth/auth';
-import FormInput from '../../../../components/common/form-input/FormInput';
-import { useAuthContext } from '../../../../contexts/AuthContext';
-import { PageEnum } from '../../../../types/enums/PageEnum';
-import { IAuthResponse } from '../../../../types/interfaces/auth/IAuthResponse';
+import { oauth2Urls } from '../../../../../api';
+import { authUrls } from '../../../../../api/auth/auth';
+import FormInput from '../../../../../components/common/form-input/FormInput';
+import { useAuthContext } from '../../../../../contexts/AuthContext';
+import { PageEnum } from '../../../../../types/enums/PageEnum';
+import { IAuthResponse } from '../../../../../types/interfaces/auth/IAuthResponse';
 import rocketImage from '../../img/rocket.png';
 import {
   EMAIL_VALIDATIONS,
@@ -84,24 +84,11 @@ function LoginForm() {
           </div>
         </div>
         <div className="form-row space-between">
+          <div className="form-item"></div>
           <div className="form-item">
-            {/* <div className="checkbox-wrap">
-                  <input
-                    type="checkbox"
-                    id="login-remember"
-                    name="login_remember"
-                    {...register()}
-                  />
-                  <div className="checkbox-box">
-                    <img src={markIcon} />
-                  </div>
-                  <label htmlFor="login-remember">Remember Me</label>
-                </div> */}
-          </div>
-          <div className="form-item">
-            <a className="form-link" href="#">
+            <Link className="form-link" to={PageEnum.FORGOT_PASSWORD}>
               Forgot Password?
-            </a>
+            </Link>
           </div>
         </div>
         <div className="form-row">

@@ -2,13 +2,13 @@ import { useMemo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import PhoneInput, { Country } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
-import FormInput from '../../../../../components/common/form-input/FormInput';
+import FormInput from '../../../../../../components/common/form-input/FormInput';
 import SelectInput, {
   SelectOption,
-} from '../../../../../components/common/select-input/SelectInput';
-import { IDefaultObject } from '../../../../../types/interfaces/common/IDefaultObject';
-import { ICity } from '../../../../../types/interfaces/location/ICity';
-import { ICountry } from '../../../../../types/interfaces/location/ICountry';
+} from '../../../../../../components/common/select-input/SelectInput';
+import { IDefaultObject } from '../../../../../../types/interfaces/common/IDefaultObject';
+import { ICity } from '../../../../../../types/interfaces/location/ICity';
+import { ICountry } from '../../../../../../types/interfaces/location/ICountry';
 import {
   AdditionalStepperForm,
   IAdditionalStepper,

@@ -5,6 +5,7 @@ import com.localWeb.localWeb.models.baseEntity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Getter
@@ -22,7 +23,7 @@ public class Phone extends BaseEntity {
     private Country country;
 
     @NotNull(message = "The phone number should not be null!")
-    @Pattern(regexp = "\\d{10}", message = "The phone number should consist of exactly 10 digits.")
+    @Size(min = 7, message = "The phone number should be at least 7 symbols!")
     private String number;
 
     @ManyToOne

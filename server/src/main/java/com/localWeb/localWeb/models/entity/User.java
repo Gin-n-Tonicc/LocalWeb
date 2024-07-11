@@ -6,6 +6,8 @@ import com.localWeb.localWeb.models.baseEntity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,9 +27,11 @@ import java.util.Set;
 public class User extends BaseEntity implements UserDetails {
 
     @NotNull(message = "The name of the user should not be null!")
+    @Size(min = 2, message = "The name should be at least 2 symbols!")
     private String name;
 
     @NotNull(message = "The surname should not be null!")
+    @Size(min = 2, message = "The surname should be at least 2 symbols!")
     private String surname;
 
     @Email(message = "Email should be a well-formatted email!")
@@ -35,6 +39,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(unique = true)
     private String email;
 
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "Required minimum eight characters, one letter & one number!")
     private String password;
 
     @ManyToOne

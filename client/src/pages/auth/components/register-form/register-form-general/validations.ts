@@ -6,7 +6,7 @@ export const REPEAT_PASSWORD_VALIDATIONS = (
 ): RegisterOptions => ({
   ...PASSWORD_VALIDATIONS,
   validate: (val: string) => {
-    if (password != val) {
+    if (password !== val) {
       return 'auth.repeat.password.not.match';
     }
   },

@@ -3,6 +3,7 @@ import { useFetch } from 'use-http';
 import { authUrls } from '../../../../api/auth/auth';
 import { cityUrls } from '../../../../api/location/city';
 import { countryUrls } from '../../../../api/location/country';
+import { useToastContext } from '../../../../contexts/ToastContext';
 import { IAuthResponse } from '../../../../types/interfaces/auth/IAuthResponse';
 import { ICity } from '../../../../types/interfaces/location/ICity';
 import { ICountry } from '../../../../types/interfaces/location/ICountry';
@@ -34,6 +35,7 @@ const DEFAULT_STEPPER_STATE: IStepperState = {
 
 function RegisterForm() {
   const [stepperState, setStepperState] = useState(DEFAULT_STEPPER_STATE);
+  const { info } = useToastContext();
 
   const { data: cities } = useFetch<ICity[]>(cityUrls.fetchAll, []);
   const { data: countries } = useFetch<ICountry[]>(countryUrls.fetchAll, []);
@@ -54,6 +56,7 @@ function RegisterForm() {
     await postUser(body);
     if (responseUser.ok) {
       setStepperState(DEFAULT_STEPPER_STATE);
+      info('A confirmation email has been sent to the given email address!');
     }
   };
 

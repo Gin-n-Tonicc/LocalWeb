@@ -8,6 +8,10 @@ import { useAuthContext } from '../../../../contexts/AuthContext';
 import { PageEnum } from '../../../../types/enums/PageEnum';
 import { IAuthResponse } from '../../../../types/interfaces/auth/IAuthResponse';
 import rocketImage from '../../img/rocket.png';
+import {
+  EMAIL_VALIDATIONS,
+  PASSWORD_VALIDATIONS,
+} from '../../validations-common';
 import googleIcon from './img/icons/google.svg';
 
 type Inputs = {
@@ -63,6 +67,7 @@ function LoginForm() {
               placeholder="Email"
               id="login-email"
               name="email"
+              rules={EMAIL_VALIDATIONS}
             />
           </div>
         </div>
@@ -74,6 +79,7 @@ function LoginForm() {
               placeholder="Password"
               id="login-password"
               name="password"
+              rules={PASSWORD_VALIDATIONS}
             />
           </div>
         </div>

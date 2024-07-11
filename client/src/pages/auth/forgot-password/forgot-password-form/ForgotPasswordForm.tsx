@@ -31,17 +31,11 @@ function ForgotPasswordForm() {
     mode: 'onSubmit',
   });
 
-  const {
-    post: forgotPasswordPost,
-    response: forgotPasswordRes,
-    loading: forgotPasswordLoading,
-  } = useFetch<string>(authUrls.forgotPassword(watch('email')));
+  const { post: forgotPasswordPost, response: forgotPasswordRes } =
+    useFetch<string>(authUrls.forgotPassword(watch('email')));
 
-  const {
-    post: resetPasswordPost,
-    response: resetPasswordRes,
-    loading: resetPasswordLoading,
-  } = useFetch<string>(authUrls.resetPassword(token, watch('newPassword')));
+  const { post: resetPasswordPost, response: resetPasswordRes } =
+    useFetch<string>(authUrls.resetPassword(token, watch('newPassword')));
 
   const buttonText = token ? 'Reset password' : 'Send reset email';
 

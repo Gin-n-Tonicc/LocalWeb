@@ -113,7 +113,7 @@ function RegisterForm() {
   return (
     <div className="form-box login-register-form-element register-form">
       <img className="form-box-decoration" src={rocketImage} alt="rocket" />
-      <h2 className="form-box-title">Create your Account!</h2>
+      <h2 className="form-box-title">Create your Account</h2>
 
       {stepperEnumToComponentMap.get(stepperState.currentStep)}
 

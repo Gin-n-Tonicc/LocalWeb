@@ -1,4 +1,9 @@
-import Select, { SingleValue } from 'react-select';
+import Select, {
+  ControlProps,
+  CSSObjectWithLabel,
+  GroupBase,
+  SingleValue,
+} from 'react-select';
 import './SelectInput.scss';
 
 export interface SelectOption {
@@ -9,12 +14,27 @@ export interface SelectOption {
 interface SelectInputProps {
   options: SelectOption[];
   onOptionChange: (v: string | undefined) => void;
+  hasError?: boolean;
   placeholder?: string;
   defaultValue?: SingleValue<SelectOption>;
 }
 
 // The component that displays a dropdown with values based on the props
 function SelectInput(props: SelectInputProps) {
+  const getStyles = (
+    baseStyles: CSSObjectWithLabel,
+    state: ControlProps<SelectOption, false, GroupBase<SelectOption>>
+  ): CSSObjectWithLabel => {
+    if (!props.hasError) {
+      return baseStyles;
+    }
+
+    return {
+      ...baseStyles,
+      borderColor: '#f9515c',
+    };
+  };
+
   return (
     <>
       <Select
@@ -24,6 +44,9 @@ function SelectInput(props: SelectInputProps) {
         options={props.options}
         onChange={(newValue) => {
           props.onOptionChange(newValue?.value);
+        }}
+        styles={{
+          control: getStyles,
         }}
         theme={(theme) => ({
           ...theme,

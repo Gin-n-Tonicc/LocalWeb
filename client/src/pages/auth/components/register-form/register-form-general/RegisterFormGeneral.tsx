@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import FormInput from '../../../../../components/common/form-input/FormInput';
 import {
@@ -6,6 +5,13 @@ import {
   IGeneralStepperForm,
   StepperButtonEnum,
 } from '../types';
+import {
+  EMAIL_VALIDATIONS,
+  FIRST_NAME_VALIDATIONS,
+  PASSWORD_VALIDATIONS,
+  REPEAT_PASSWORD_VALIDATIONS,
+  SUR_NAME_VALIDATIONS,
+} from './validations';
 
 interface RegisterFormGeneralProps {
   currentState: IGeneralStepper;
@@ -16,16 +22,7 @@ function RegisterFormGeneral({
   currentState,
   nextStep,
 }: RegisterFormGeneralProps) {
-  const {
-    handleSubmit,
-    control,
-    reset,
-    watch,
-    setError,
-    clearErrors,
-    setValue,
-    formState: { errors },
-  } = useForm<IGeneralStepperForm>({
+  const { handleSubmit, control, watch } = useForm<IGeneralStepperForm>({
     defaultValues: {
       name: currentState.name,
       surname: currentState.surname,
@@ -33,30 +30,13 @@ function RegisterFormGeneral({
       password: currentState.password,
       repeatPassword: currentState.repeatPassword,
     },
-    mode: 'onChange',
+    mode: 'onSubmit',
   });
 
-  const formValues = watch();
-
-  useEffect(() => {
-    const areEqual = formValues.password === formValues.repeatPassword;
-    const hasError = Boolean(errors.repeatPassword);
-    const hasManualError = hasError && errors.repeatPassword?.type === 'manual';
-
-    if (!hasError && !areEqual) {
-      setError('repeatPassword', {
-        type: 'manual',
-        message: 'Passwords did not match',
-      });
-    }
-
-    if (hasManualError && areEqual) {
-      clearErrors('repeatPassword');
-    }
-  }, [errors, formValues, setError, clearErrors]);
-
   // Handle form submission
-  const onSubmit: SubmitHandler<IGeneralStepperForm> = async (data) => {
+  const onSubmit: SubmitHandler<IGeneralStepperForm> = async (
+    data: IGeneralStepperForm
+  ) => {
     const dataFinish: IGeneralStepper = {
       name: data.name.trim(),
       surname: data.surname.trim(),
@@ -69,75 +49,79 @@ function RegisterFormGeneral({
   };
 
   return (
-    <>
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-row">
-          <div className="form-item">
-            <FormInput
-              control={control}
-              type="text"
-              placeholder="Your Email"
-              id="register-email"
-              name="email"
-            />
-          </div>
+    <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <div className="form-row">
+        <div className="form-item">
+          <FormInput
+            control={control}
+            type="text"
+            placeholder="Your Email"
+            id="register-email"
+            name="email"
+            rules={EMAIL_VALIDATIONS}
+          />
         </div>
-        <div className="form-row">
-          <div className="form-item">
-            <FormInput
-              control={control}
-              type="text"
-              placeholder="First Name"
-              id="register-first-name"
-              name="name"
-            />
-          </div>
+      </div>
+      <div className="form-row">
+        <div className="form-item">
+          <FormInput
+            control={control}
+            type="text"
+            placeholder="First Name"
+            id="register-first-name"
+            name="name"
+            rules={FIRST_NAME_VALIDATIONS}
+          />
         </div>
-        <div className="form-row">
-          <div className="form-item">
-            <FormInput
-              control={control}
-              type="text"
-              placeholder="Sur Name"
-              id="register-sur-name"
-              name="surname"
-            />
-          </div>
+      </div>
+      <div className="form-row">
+        <div className="form-item">
+          <FormInput
+            control={control}
+            type="text"
+            placeholder="Sur Name"
+            id="register-sur-name"
+            name="surname"
+            rules={SUR_NAME_VALIDATIONS}
+          />
         </div>
-        <div className="form-row">
-          <div className="form-item">
-            <FormInput
-              control={control}
-              type="password"
-              placeholder="Password"
-              id="register-password"
-              name="password"
-            />
-          </div>
+      </div>
+      <div className="form-row">
+        <div className="form-item">
+          <FormInput
+            control={control}
+            type="password"
+            placeholder="Password"
+            id="register-password"
+            name="password"
+            rules={PASSWORD_VALIDATIONS}
+          />
         </div>
-        <div className="form-row">
-          <div className="form-item">
-            <FormInput
-              control={control}
-              type="password"
-              placeholder="Repeat Password"
-              id="login-repeat-password"
-              name="repeatPassword"
-            />
-          </div>
+      </div>
+      <div className="form-row">
+        <div className="form-item">
+          <FormInput
+            control={control}
+            type="password"
+            placeholder="Repeat Password"
+            id="login-repeat-password"
+            name="repeatPassword"
+            rules={REPEAT_PASSWORD_VALIDATIONS(watch('password'))}
+          />
         </div>
-        <div className="form-row">
-          <div className="form-item d-flex align-content-center justify-content-end">
-            <button
-              className="button medium primary"
-              style={{ width: '45%' }}
-              data-button-type={StepperButtonEnum.NEXT}>
-              Next
-            </button>
-          </div>
+      </div>
+      <div className="form-row">
+        <div className="form-item d-flex align-content-center justify-content-end">
+          <button
+            className="button medium primary mt-5"
+            type="submit"
+            style={{ width: '45%' }}
+            data-button-type={StepperButtonEnum.NEXT}>
+            Next
+          </button>
         </div>
-      </form>
-    </>
+      </div>
+    </form>
   );
 }
 

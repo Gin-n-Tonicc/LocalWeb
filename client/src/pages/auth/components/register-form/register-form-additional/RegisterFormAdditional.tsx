@@ -14,6 +14,11 @@ import {
   IAdditionalStepper,
   StepperButtonEnum,
 } from '../types';
+import {
+  ADDRESS_VALIDATIONS,
+  PHONE_NUMBER_VALIDATIONS,
+  SELECT_TOWN_VALIDATIONS,
+} from './validations';
 
 interface RegisterFormAdditionalProps {
   currentState: IAdditionalStepper;
@@ -38,10 +43,6 @@ function RegisterFormAdditional({
   const {
     handleSubmit,
     control,
-    reset,
-    watch,
-    setError,
-    clearErrors,
     setValue,
     formState: { errors },
   } = useForm<AdditionalStepperForm>({
@@ -135,14 +136,22 @@ function RegisterFormAdditional({
     <>
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-row">
-          <div className="form-item mb-2">
-            <SelectInput
-              defaultValue={cities.find(
-                (x) => x.value === currentState.primaryAddress.cityId
-              )}
-              placeholder="Select your town"
-              options={cities}
-              onOptionChange={(v) => handleOptionChange('cityId', v)}
+          <div className="form-item mb-4">
+            <FormInput
+              control={control}
+              name="cityId"
+              customComponent={
+                <SelectInput
+                  defaultValue={cities.find(
+                    (x) => x.value === currentState.primaryAddress.cityId
+                  )}
+                  placeholder="Select your town"
+                  options={cities}
+                  hasError={Boolean(errors.cityId)}
+                  onOptionChange={(v) => handleOptionChange('cityId', v)}
+                />
+              }
+              rules={SELECT_TOWN_VALIDATIONS}
             />
           </div>
 
@@ -153,22 +162,32 @@ function RegisterFormAdditional({
               placeholder="Your address"
               id="register-address1"
               name="line"
+              rules={ADDRESS_VALIDATIONS}
             />
           </div>
         </div>
         <div className="form-row">
-          <div className="form-item ml-2 mb-5">
-            <PhoneInput
-              value={currentState.phone.number}
-              defaultCountry={
-                countries.mapIdToAlpha2[currentState.phone.country] ||
-                DEFAULT_COUNTRY
+          <div className="form-item mb-5">
+            <FormInput
+              control={control}
+              name="number"
+              customComponent={
+                <div className="ml-2">
+                  <PhoneInput
+                    value={currentState.phone.number}
+                    defaultCountry={
+                      countries.mapIdToAlpha2[currentState.phone.country] ||
+                      DEFAULT_COUNTRY
+                    }
+                    countryCallingCodeEditable={false}
+                    countries={countries.list}
+                    placeholder="Enter phone number"
+                    onChange={(v) => handleOptionChange('number', v)}
+                    onCountryChange={(v) => handleOptionChange('country', v)}
+                  />
+                </div>
               }
-              countryCallingCodeEditable={false}
-              countries={countries.list}
-              placeholder="Enter phone number"
-              onChange={(v) => handleOptionChange('number', v)}
-              onCountryChange={(v) => handleOptionChange('country', v)}
+              rules={PHONE_NUMBER_VALIDATIONS}
             />
           </div>
         </div>

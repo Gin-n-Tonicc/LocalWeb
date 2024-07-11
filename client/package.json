@@ -18,7 +18,6 @@
     "react-router-dom": "^6.24.0",
     "react-scripts": "5.0.1",
     "react-select": "^5.8.0",
-    "react-select-country-list": "^2.2.3",
     "sass": "^1.77.6",
     "typescript": "^4.9.5",
     "use-http": "^1.0.28",

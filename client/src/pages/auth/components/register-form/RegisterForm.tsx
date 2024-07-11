@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useFetch } from 'use-http';
+import { authUrls } from '../../../../api/auth/auth';
 import { cityUrls } from '../../../../api/location/city';
 import { countryUrls } from '../../../../api/location/country';
+import { IAuthResponse } from '../../../../types/interfaces/auth/IAuthResponse';
 import { ICity } from '../../../../types/interfaces/location/ICity';
 import { ICountry } from '../../../../types/interfaces/location/ICountry';
 import rocketImage from '../../img/rocket.png';
@@ -35,8 +37,11 @@ function RegisterForm() {
 
   const { data: cities } = useFetch<ICity[]>(cityUrls.fetchAll, []);
   const { data: countries } = useFetch<ICountry[]>(countryUrls.fetchAll, []);
+  const { post: postUser, response: responseUser } = useFetch<IAuthResponse>(
+    authUrls.register
+  );
 
-  const handleSubmit = (data: PossibleStepperDTO) => {
+  const handleSubmit = async (data: PossibleStepperDTO) => {
     const stepperValue = { ...stepperState, [stepperState.currentStep]: data };
     const { repeatPassword, ...generalStepperValue } =
       stepperValue[StepperEnum.GENERAL];
@@ -46,7 +51,10 @@ function RegisterForm() {
       ...stepperValue[StepperEnum.ADDITIONAL_INFO],
     };
 
-    console.log({ body });
+    await postUser(body);
+    if (responseUser.ok) {
+      setStepperState(DEFAULT_STEPPER_STATE);
+    }
   };
 
   const handleStep = (data: PossibleStepperDTO, step: number) => {

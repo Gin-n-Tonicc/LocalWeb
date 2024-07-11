@@ -34,7 +34,11 @@ select {
   color: $color-text;
   transition: border-color 0.2s ease-in-out;
 
-  &:focus {
+  &.error {
+    border-color: $red;
+  }
+
+  &:not(.error):focus {
     border-color: $color-secondary;
   }
 }

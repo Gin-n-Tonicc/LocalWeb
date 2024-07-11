@@ -1,143 +1,119 @@
-import { useEffect } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useMemo, useState } from 'react';
 import { useFetch } from 'use-http';
 import { authUrls } from '../../../../api/auth/auth';
-import FormInput from '../../../../components/common/form-input/FormInput';
-import { IUser } from '../../../../types/interfaces/auth/IUser';
+import { cityUrls } from '../../../../api/location/city';
+import { countryUrls } from '../../../../api/location/country';
+import { IAuthResponse } from '../../../../types/interfaces/auth/IAuthResponse';
+import { ICity } from '../../../../types/interfaces/location/ICity';
+import { ICountry } from '../../../../types/interfaces/location/ICountry';
 import rocketImage from '../../img/rocket.png';
+import RegisterFormAdditional from './register-form-additional/RegisterFormAdditional';
+import RegisterFormGeneral from './register-form-general/RegisterFormGeneral';
+import { IStepperState, PossibleStepperDTO, StepperEnum } from './types';
 
-type Inputs = {
-  firstName: string;
-  surName: string;
-  email: string;
-  password: string;
-  repeatPassword: string;
+const DEFAULT_STEPPER_STATE: IStepperState = {
+  currentStep: 0,
+  [StepperEnum.GENERAL]: {
+    email: '',
+    name: '',
+    surname: '',
+    password: '',
+    repeatPassword: '',
+  },
+  [StepperEnum.ADDITIONAL_INFO]: {
+    primaryAddress: {
+      line: '',
+      cityId: '',
+    },
+    phone: {
+      country: '',
+      number: '',
+    },
+  },
 };
 
 function RegisterForm() {
-  const { post, response, loading } = useFetch<IUser>(authUrls.register);
+  const [stepperState, setStepperState] = useState(DEFAULT_STEPPER_STATE);
 
-  const {
-    handleSubmit,
-    control,
-    reset,
-    watch,
-    setError,
-    clearErrors,
-    formState: { errors },
-  } = useForm<Inputs>({
-    defaultValues: {
-      firstName: '',
-      surName: '',
-      email: '',
-      password: '',
-      repeatPassword: '',
-    },
-    mode: 'onChange',
-  });
+  const { data: cities } = useFetch<ICity[]>(cityUrls.fetchAll, []);
+  const { data: countries } = useFetch<ICountry[]>(countryUrls.fetchAll, []);
+  const { post: postUser, response: responseUser } = useFetch<IAuthResponse>(
+    authUrls.register
+  );
 
-  const formValues = watch();
+  const handleSubmit = async (data: PossibleStepperDTO) => {
+    const stepperValue = { ...stepperState, [stepperState.currentStep]: data };
+    const { repeatPassword, ...generalStepperValue } =
+      stepperValue[StepperEnum.GENERAL];
 
-  // Handle form submission
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // Register user
-    await post({
-      name: data.firstName.trim(),
-      surname: data.surName.trim(),
-      email: data.email.trim(),
-      password: data.password.trim(),
-    });
+    const body = {
+      ...generalStepperValue,
+      ...stepperValue[StepperEnum.ADDITIONAL_INFO],
+    };
 
-    // Reset form, show a message that an email is sent
-    if (response.ok) {
-      reset();
-      // TODO: Identify user that an email has been sent to him to verify his account
+    await postUser(body);
+    if (responseUser.ok) {
+      setStepperState(DEFAULT_STEPPER_STATE);
     }
   };
 
-  useEffect(() => {
-    const areEqual = formValues.password === formValues.repeatPassword;
-    const hasError = Boolean(errors.repeatPassword);
-    const hasManualError = hasError && errors.repeatPassword?.type === 'manual';
+  const handleStep = (data: PossibleStepperDTO, step: number) => {
+    setStepperState((prev) => {
+      let updatedStep = prev.currentStep + step;
 
-    if (!hasError && !areEqual) {
-      setError('repeatPassword', {
-        type: 'manual',
-        message: 'Passwords did not match',
-      });
-    }
+      if (updatedStep < 0) {
+        updatedStep = 0;
+      } else if (updatedStep >= StepperEnum.__LENGTH) {
+        updatedStep = StepperEnum.__LENGTH - 1;
+      }
 
-    if (hasManualError && areEqual) {
-      clearErrors('repeatPassword');
-    }
-  }, [errors, formValues, setError, clearErrors]);
+      return {
+        ...prev,
+        [prev.currentStep]: data,
+        currentStep: updatedStep,
+      };
+    });
+  };
+
+  const previousStep = (data: PossibleStepperDTO) => {
+    handleStep(data, -1);
+  };
+
+  const nextStep = (data: PossibleStepperDTO) => {
+    handleStep(data, 1);
+  };
+
+  const stepperEnumToComponentMap = useMemo(
+    () =>
+      new Map<number, JSX.Element>([
+        [
+          StepperEnum.GENERAL,
+          <RegisterFormGeneral
+            nextStep={nextStep}
+            currentState={stepperState[StepperEnum.GENERAL]}
+          />,
+        ],
+        [
+          StepperEnum.ADDITIONAL_INFO,
+          <RegisterFormAdditional
+            cities={cities || []}
+            countries={countries || []}
+            previousStep={previousStep}
+            submit={handleSubmit}
+            currentState={stepperState[StepperEnum.ADDITIONAL_INFO]}
+          />,
+        ],
+      ]),
+    [stepperState, countries, cities, nextStep, previousStep, handleSubmit]
+  );
 
   return (
     <div className="form-box login-register-form-element register-form">
       <img className="form-box-decoration" src={rocketImage} alt="rocket" />
       <h2 className="form-box-title">Create your Account!</h2>
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-row">
-          <div className="form-item">
-            <FormInput
-              control={control}
-              type="text"
-              placeholder="Your Email"
-              id="register-email"
-              name="email"
-            />
-          </div>
-        </div>
-        <div className="form-row">
-          <div className="form-item">
-            <FormInput
-              control={control}
-              type="text"
-              placeholder="First Name"
-              id="register-first-name"
-              name="firstName"
-            />
-          </div>
-        </div>
-        <div className="form-row">
-          <div className="form-item">
-            <FormInput
-              control={control}
-              type="text"
-              placeholder="Sur Name"
-              id="register-sur-name"
-              name="surName"
-            />
-          </div>
-        </div>
-        <div className="form-row">
-          <div className="form-item">
-            <FormInput
-              control={control}
-              type="password"
-              placeholder="Password"
-              id="register-password"
-              name="password"
-            />
-          </div>
-        </div>
-        <div className="form-row">
-          <div className="form-item">
-            <FormInput
-              control={control}
-              type="password"
-              placeholder="Repeat Password"
-              id="login-repeat-password"
-              name="repeatPassword"
-            />
-          </div>
-        </div>
-        <div className="form-row">
-          <div className="form-item">
-            <button className="button medium primary">Register Now!</button>
-          </div>
-        </div>
-      </form>
+
+      {stepperEnumToComponentMap.get(stepperState.currentStep)}
+
       <p className="form-text">
         You'll receive a confirmation email in your inbox with a link to
         activate your account. If you have any problems,{' '}

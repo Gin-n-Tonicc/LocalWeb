@@ -7,11 +7,11 @@ import FormInput from '../../../../../components/common/form-input/FormInput';
 import { useAuthContext } from '../../../../../contexts/AuthContext';
 import { PageEnum } from '../../../../../types/enums/PageEnum';
 import { IAuthResponse } from '../../../../../types/interfaces/auth/IAuthResponse';
-import rocketImage from '../../img/rocket.png';
+import rocketImage from '../../../img/rocket.png';
 import {
   EMAIL_VALIDATIONS,
   PASSWORD_VALIDATIONS,
-} from '../../validations-common';
+} from '../../../validations-common';
 import googleIcon from './img/icons/google.svg';
 
 type Inputs = {

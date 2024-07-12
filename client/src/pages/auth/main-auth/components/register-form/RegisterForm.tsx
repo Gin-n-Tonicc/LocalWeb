@@ -7,7 +7,7 @@ import { useToastContext } from '../../../../../contexts/ToastContext';
 import { IAuthResponse } from '../../../../../types/interfaces/auth/IAuthResponse';
 import { ICity } from '../../../../../types/interfaces/location/ICity';
 import { ICountry } from '../../../../../types/interfaces/location/ICountry';
-import rocketImage from '../../img/rocket.png';
+import rocketImage from '../../../img/rocket.png';
 import RegisterFormAdditional from './register-form-additional/RegisterFormAdditional';
 import RegisterFormGeneral from './register-form-general/RegisterFormGeneral';
 import { IStepperState, PossibleStepperDTO, StepperEnum } from './types';
@@ -113,7 +113,7 @@ function RegisterForm() {
   return (
     <div className="form-box login-register-form-element register-form">
       <img className="form-box-decoration" src={rocketImage} alt="rocket" />
-      <h2 className="form-box-title">Create your Account!</h2>
+      <h2 className="form-box-title">Create your Account</h2>
 
       {stepperEnumToComponentMap.get(stepperState.currentStep)}
 

@@ -9,4 +9,10 @@ export const authUrls = Object.seal({
   refreshToken() {
     return `${baseApiUrl}${this.refreshTokenPath}`;
   },
+  forgotPassword: (email: string) =>
+    `${baseApiUrl}/auth/forgot-password?email=${encodeURIComponent(email)}`,
+  resetPassword: (token: string, newPassword: string) =>
+    `${baseApiUrl}/auth/password-reset?token=${encodeURIComponent(
+      token
+    )}&newPassword=${encodeURIComponent(newPassword)}`,
 });

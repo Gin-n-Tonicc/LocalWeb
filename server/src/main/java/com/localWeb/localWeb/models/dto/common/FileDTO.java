@@ -1,6 +1,5 @@
 package com.localWeb.localWeb.models.dto.common;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrganisationDTO {
+public class FileDTO {
     private String name;
-    private String description;
-    private String email;
-    private String websiteUrl;
+    private String type;
+    private String path;
+    private Long size;
 }

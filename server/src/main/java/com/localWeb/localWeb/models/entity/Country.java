@@ -1,7 +1,10 @@
 package com.localWeb.localWeb.models.entity;
 
 import com.localWeb.localWeb.models.baseEntity.BaseEntity;
+import com.localWeb.localWeb.utils.SlugUtils;
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

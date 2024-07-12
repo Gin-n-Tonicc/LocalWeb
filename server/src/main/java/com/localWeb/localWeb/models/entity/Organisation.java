@@ -1,6 +1,7 @@
 package com.localWeb.localWeb.models.entity;
 
 import com.localWeb.localWeb.models.baseEntity.BaseEntity;
+import com.localWeb.localWeb.utils.SlugUtils;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +13,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -29,18 +29,47 @@ public class Organisation extends BaseEntity {
     @Size(min = 60, max = 400, message = "The description must be between 60 and 400 symbols!")
     private String description;
 
-    @Email(message = "Email should be a well-formatted email!")
     @NotNull(message = "The email should not be null!")
     @Column(unique = true)
+    @Email(message = "Email should be a well-formatted email!")
     private String email;
 
     private String websiteUrl;
 
-    @ManyToMany(mappedBy = "organisations")
-    @ToString.Exclude
-    private Set<User> users = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "file_id")
+    private File profileImage;
 
-    @OneToMany(mappedBy = "phoneable", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany
+    @JoinTable(
+            name = "organisation_members",
+            joinColumns = @JoinColumn(name = "organisation_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     @ToString.Exclude
-    private Set<Phone> phones = new HashSet<>();
+    private Set<User> members = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "organisation_owners",
+            joinColumns = @JoinColumn(name = "organisation_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    @ToString.Exclude
+    private Set<User> owners = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "organisation_files",
+            joinColumns = @JoinColumn(name = "organisation_id"),
+            inverseJoinColumns = @JoinColumn(name = "file_id")
+    )
+    @ToString.Exclude
+    private Set<File> files = new HashSet<>();
+
+    @PrePersist
+    @PreUpdate
+    private void updateSlug() {
+        this.slug = SlugUtils.generateSlug(this.name);
+    }
 }

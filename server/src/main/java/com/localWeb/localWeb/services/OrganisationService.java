@@ -1,20 +1,28 @@
 package com.localWeb.localWeb.services;
 
-import com.localWeb.localWeb.models.dto.request.OrganisationRequest;
-import com.localWeb.localWeb.models.dto.response.OrganisationResponse;
+import com.localWeb.localWeb.models.dto.auth.PublicUserDTO;
+import com.localWeb.localWeb.models.dto.request.OrganisationRequestDTO;
+import com.localWeb.localWeb.models.dto.response.OrganisationResponseDTO;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public interface OrganisationService {
 
-    List<OrganisationResponse> getAllOrganisations();
+    OrganisationResponseDTO createOrganisation(OrganisationRequestDTO courseDTO, PublicUserDTO loggedUser);
 
-    OrganisationResponse getOrganisationById(UUID id);
+    OrganisationResponseDTO updateOrganisation(UUID id, OrganisationRequestDTO organisationDTO, PublicUserDTO loggedUser);
 
-    OrganisationResponse createOrganisation(OrganisationRequest organisationDTO);
+    OrganisationResponseDTO getOrganisationById(UUID id);
 
-    OrganisationResponse updateOrganisation(UUID id, OrganisationRequest organisationDTO);
+    List<OrganisationResponseDTO> getAllOrganisations(PublicUserDTO loggedUser);
 
-    void deleteOrganisation(UUID id);
+    void deleteOrganisation(UUID id, PublicUserDTO loggedUser);
+
+    OrganisationResponseDTO addMemberToOrganisation(UUID organisationId, PublicUserDTO loggedUser);
+
+    OrganisationResponseDTO removeMemberFromOrganisation(UUID organisationId, PublicUserDTO loggedUser);
+
+    Set<PublicUserDTO> listMembersOfOrganisation(UUID organisationId);
 }

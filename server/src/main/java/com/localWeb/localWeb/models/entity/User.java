@@ -46,18 +46,19 @@ public class User extends BaseEntity implements UserDetails {
     @JoinColumn(name = "file_id")
     private File avatar;
 
-    @Getter
     @Column(name = "enabled")
     private boolean enabled;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_organisation",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "organisation_id")
-    )
+    @ManyToMany(mappedBy = "members")
     @ToString.Exclude
+    private Set<Organisation> memberOrganisations = new HashSet<>();
+
+    @ManyToMany(mappedBy = "owners")
     private Set<Organisation> organisations = new HashSet<>();
+
+    @OneToMany(mappedBy = "phoneable", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<Phone> phones = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -77,9 +78,8 @@ public class User extends BaseEntity implements UserDetails {
     @ToString.Exclude
     private Set<Group> groups = new HashSet<>();
 
-    @OneToMany(mappedBy = "phoneable", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
-    private Set<Phone> phones = new HashSet<>();
+    @OneToMany
+    private Set<File> files = new HashSet<>();
 
     @NotNull
     @Enumerated(EnumType.STRING)

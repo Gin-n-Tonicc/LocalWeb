@@ -39,6 +39,7 @@ public class CityServiceImpl implements CityService {
         if (city.isPresent()) {
             return modelMapper.map(city.get(), CityResponse.class);
         }
+
         throw new CityNotFoundException(messageSource);
     }
 

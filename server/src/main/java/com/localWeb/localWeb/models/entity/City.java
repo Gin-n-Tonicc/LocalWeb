@@ -1,10 +1,8 @@
 package com.localWeb.localWeb.models.entity;
 
 import com.localWeb.localWeb.models.baseEntity.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.localWeb.localWeb.utils.SlugUtils;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -27,4 +25,10 @@ public class City extends BaseEntity {
 
     @NotNull(message = "The slug of the city should not be null!")
     private String slug;
+
+    @PrePersist
+    @PreUpdate
+    private void updateSlug() {
+        this.slug = SlugUtils.generateSlug(this.name);
+    }
 }

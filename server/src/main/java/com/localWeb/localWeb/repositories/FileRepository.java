@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface FileRepository extends JpaRepository<File, Long> {
+public interface FileRepository extends JpaRepository<File, UUID> {
     File findByIdAndDeletedAtIsNull(UUID id);
 }

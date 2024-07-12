@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.context.ApplicationListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -32,6 +33,7 @@ public class PasswordResetListener implements ApplicationListener<OnPasswordRese
         sendPasswordResetEmail(event);
     }
 
+    @Async
     private void sendPasswordResetEmail(OnPasswordResetRequestEvent event) {
         User user = event.getUser();
 

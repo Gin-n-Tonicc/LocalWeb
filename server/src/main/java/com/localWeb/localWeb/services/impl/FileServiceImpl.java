@@ -65,7 +65,10 @@ public class FileServiceImpl implements FileService {
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("media").build();
         InputStream inputStream = FileServiceImpl.class.getClassLoader().getResourceAsStream("firebase.json");
 
-        assert inputStream != null;
+        if(inputStream == null){
+            return null;
+        }
+
         Credentials credentials = GoogleCredentials.fromStream(inputStream);
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
         storage.create(blobInfo, Files.readAllBytes(file.toPath()));

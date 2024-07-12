@@ -141,7 +141,9 @@ public class UserServiceImpl implements UserService {
                 registerRequest.setSurname(oAuth2User.getFamilyName());
 
                 File file = fileService.downloadImageFromURL(oAuth2User.getPicture());
-                com.localWeb.localWeb.models.entity.File avatar = fileService.uploadFile(file, oAuth2User.getName() + ".png");
+
+                String fileName = oAuth2User.getName() + UUID.randomUUID() + ".png";
+                com.localWeb.localWeb.models.entity.File avatar = fileService.uploadFile(file, fileName);
 
                 registerRequest.setAvatarId(avatar.getId());
 

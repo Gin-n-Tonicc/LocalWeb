@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import FormInput from '../../../../../components/common/form-input/FormInput';
+import FormInput from '../../../../../../components/common/form-input/FormInput';
 import {
   EMAIL_VALIDATIONS,
   PASSWORD_VALIDATIONS,

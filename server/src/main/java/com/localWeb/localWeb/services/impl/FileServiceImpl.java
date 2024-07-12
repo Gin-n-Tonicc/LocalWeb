@@ -65,7 +65,7 @@ public class FileServiceImpl implements FileService {
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("media").build();
         InputStream inputStream = FileServiceImpl.class.getClassLoader().getResourceAsStream("firebase.json");
 
-        if(inputStream == null){
+        if (inputStream == null) {
             return null;
         }
 

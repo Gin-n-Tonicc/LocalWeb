@@ -22,6 +22,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @AllArgsConstructor
@@ -35,8 +36,8 @@ public class OrganisationServiceImpl implements OrganisationService {
 
     @Override
     public List<OrganisationResponseDTO> getAllOrganisations(PublicUserDTO loggedUser) {
-        if(loggedUser!=null){
-            if(loggedUser.getRole() == Role.ADMIN){
+        if (loggedUser != null) {
+            if (loggedUser.getRole() == Role.ADMIN) {
                 List<Organisation> allOrganisations = organisationRepository.findAll();
                 return allOrganisations.stream().map(organisation -> modelMapper.map(organisation, OrganisationResponseDTO.class)).toList();
             }
@@ -112,6 +113,21 @@ public class OrganisationServiceImpl implements OrganisationService {
 
         Organisation updatedOrganisation = organisationRepository.save(existingOrganisation);
         return modelMapper.map(updatedOrganisation, OrganisationResponseDTO.class);
+    }
+
+    @Override
+    @Transactional
+    public void deleteOrganisation(UUID id, PublicUserDTO loggedUser) {
+        Organisation organisation = organisationRepository.findById(id).orElseThrow(() -> new OrganisationNotFoundException(messageSource));
+        User user = userRepository.findByEmail(loggedUser.getEmail()).orElseThrow(() -> new UserNotFoundException(messageSource));
+
+        //The blog can be deleted only from the ADMIN or from the owner of the blog
+        if (!(organisation.getOwners().contains(user)) && !(loggedUser.getRole().equals(Role.ADMIN))) {
+            throw new AccessDeniedException(messageSource);
+        }
+
+        organisation.setDeletedAt(LocalDateTime.now());
+        organisationRepository.save(organisation);
     }
 
     private User findUserByEmail(String email) {

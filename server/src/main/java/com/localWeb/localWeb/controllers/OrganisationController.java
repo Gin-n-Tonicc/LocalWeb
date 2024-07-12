@@ -57,17 +57,17 @@ public class OrganisationController {
     @ApiResponse(responseCode = "200", description = "Organisation updated", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OrganisationResponseDTO.class)))
     @ApiResponse(responseCode = "404", description = "Organisation not found")
     @PutMapping("/{id}")
-     public ResponseEntity<OrganisationResponseDTO> updateOrganisation(@PathVariable @Parameter(description = "Organisation id", example = "123e4567-e89b-12d3-a456-426614174000") UUID id, @Valid @RequestBody OrganisationRequestDTO organisationRequest,  HttpServletRequest httpServletRequest) {
+    public ResponseEntity<OrganisationResponseDTO> updateOrganisation(@PathVariable @Parameter(description = "Organisation id", example = "123e4567-e89b-12d3-a456-426614174000") UUID id, @Valid @RequestBody OrganisationRequestDTO organisationRequest, HttpServletRequest httpServletRequest) {
         return ResponseEntity.ok(organisationService.updateOrganisation(id, organisationRequest, (PublicUserDTO) httpServletRequest.getAttribute(JwtAuthenticationFilter.userKey)));
     }
 
-//
-//    @Operation(summary = "Delete an organisation by id", description = "Deletes an organisation identified by its id")
-//    @ApiResponse(responseCode = "200", description = "Organisation deleted")
-//    @ApiResponse(responseCode = "404", description = "Organisation not found")
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<String> deleteOrganisation(@PathVariable @Parameter(description = "Organisation id", example = "123e4567-e89b-12d3-a456-426614174000") UUID id) {
-//        organisationService.deleteOrganisation(id);
-//        return ResponseEntity.ok("Organisation with id: " + id + " has been deleted successfully!");
-//    }
+
+    @Operation(summary = "Delete an organisation by id", description = "Deletes an organisation identified by its id")
+    @ApiResponse(responseCode = "200", description = "Organisation deleted")
+    @ApiResponse(responseCode = "404", description = "Organisation not found")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteOrganisation(@PathVariable @Parameter(description = "Organisation id", example = "123e4567-e89b-12d3-a456-426614174000") UUID id, HttpServletRequest httpServletRequest) {
+        organisationService.deleteOrganisation(id, (PublicUserDTO) httpServletRequest.getAttribute(JwtAuthenticationFilter.userKey));
+        return ResponseEntity.ok("Organisation with id: " + id + " has been deleted successfully!");
+    }
 }

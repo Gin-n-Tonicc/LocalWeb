@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -69,5 +70,27 @@ public class OrganisationController {
     public ResponseEntity<String> deleteOrganisation(@PathVariable @Parameter(description = "Organisation id", example = "123e4567-e89b-12d3-a456-426614174000") UUID id, HttpServletRequest httpServletRequest) {
         organisationService.deleteOrganisation(id, (PublicUserDTO) httpServletRequest.getAttribute(JwtAuthenticationFilter.userKey));
         return ResponseEntity.ok("Organisation with id: " + id + " has been deleted successfully!");
+    }
+
+    @Operation(summary = "Add member to the organisation", description = "Adds member to the organisation")
+    @ApiResponse(responseCode = "200", description = "Added member", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OrganisationResponseDTO.class)))
+    @PostMapping("/addMember")
+    public ResponseEntity<OrganisationResponseDTO> addMemberToOrganisation(@PathVariable @Parameter(description = "Organisation id", example = "123e4567-e89b-12d3-a456-426614174000") UUID id, HttpServletRequest httpServletRequest) {
+        OrganisationResponseDTO createdOrganisation = organisationService.addMemberToOrganisation(id, (PublicUserDTO) httpServletRequest.getAttribute(JwtAuthenticationFilter.userKey));
+        return new ResponseEntity<>(createdOrganisation, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Remove member from the organisation", description = "Removes member from the organisation")
+    @ApiResponse(responseCode = "200", description = "Removed member", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OrganisationResponseDTO.class)))
+    @PostMapping("/removeMember")
+    public ResponseEntity<OrganisationResponseDTO> removeMemberFromOrganisation(@PathVariable @Parameter(description = "Organisation id", example = "123e4567-e89b-12d3-a456-426614174000") UUID id, HttpServletRequest httpServletRequest) {
+        OrganisationResponseDTO createdOrganisation = organisationService.removeMemberFromOrganisation(id, (PublicUserDTO) httpServletRequest.getAttribute(JwtAuthenticationFilter.userKey));
+        return new ResponseEntity<>(createdOrganisation, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get all members of the organisation", description = "Retrieves a list of all members of the organisation")
+    @GetMapping("/allMembers")
+    public ResponseEntity<Set<PublicUserDTO>> listMembersOfOrganisation(@PathVariable @Parameter(description = "Organisation id", example = "123e4567-e89b-12d3-a456-426614174000") UUID id) {
+        return ResponseEntity.ok(organisationService.listMembersOfOrganisation(id));
     }
 }

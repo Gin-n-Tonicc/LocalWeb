@@ -5,6 +5,8 @@ import com.localWeb.localWeb.exceptions.common.AccessDeniedException;
 import com.localWeb.localWeb.exceptions.files.FileNotFoundException;
 import com.localWeb.localWeb.exceptions.organisation.OrganisationCreateException;
 import com.localWeb.localWeb.exceptions.organisation.OrganisationNotFoundException;
+import com.localWeb.localWeb.exceptions.organisation.UserAlreadyMemberOfTheOrganisation;
+import com.localWeb.localWeb.exceptions.organisation.UserNotMemberOfTheOrganisation;
 import com.localWeb.localWeb.exceptions.user.UserNotFoundException;
 import com.localWeb.localWeb.models.dto.auth.PublicUserDTO;
 import com.localWeb.localWeb.models.dto.request.OrganisationRequestDTO;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -66,7 +69,9 @@ public class OrganisationServiceImpl implements OrganisationService {
             organisation.setMembers(owners); // The owners are also members
         }
 
-        User user = findUserByEmail(loggedUser.getEmail());
+        User user = userRepository.findByEmail(loggedUser.getEmail())
+                .orElseThrow(() -> new UserNotFoundException(messageSource));
+
         organisation.getOwners().add(user);
         organisation.getMembers().add(user);
 
@@ -86,7 +91,8 @@ public class OrganisationServiceImpl implements OrganisationService {
         Organisation existingOrganisation = organisationRepository.findByIdAndDeletedAtIsNull(id)
                 .orElseThrow(() -> new OrganisationNotFoundException(messageSource));
 
-        User user = findUserByEmail(loggedUser.getEmail());
+        User user = userRepository.findByEmail(loggedUser.getEmail())
+                .orElseThrow(() -> new UserNotFoundException(messageSource));
 
         if (!(existingOrganisation.getOwners().contains(user)) && !(loggedUser.getRole().equals(Role.ADMIN))) {
             throw new AccessDeniedException(messageSource);
@@ -121,7 +127,6 @@ public class OrganisationServiceImpl implements OrganisationService {
         Organisation organisation = organisationRepository.findById(id).orElseThrow(() -> new OrganisationNotFoundException(messageSource));
         User user = userRepository.findByEmail(loggedUser.getEmail()).orElseThrow(() -> new UserNotFoundException(messageSource));
 
-        //The blog can be deleted only from the ADMIN or from the owner of the blog
         if (!(organisation.getOwners().contains(user)) && !(loggedUser.getRole().equals(Role.ADMIN))) {
             throw new AccessDeniedException(messageSource);
         }
@@ -130,9 +135,44 @@ public class OrganisationServiceImpl implements OrganisationService {
         organisationRepository.save(organisation);
     }
 
-    private User findUserByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(messageSource));
+    @Override
+    public OrganisationResponseDTO addMemberToOrganisation(UUID organisationId, PublicUserDTO loggedUser) {
+        Organisation organisation = organisationRepository.findByIdAndDeletedAtIsNull(organisationId).orElseThrow(() -> new OrganisationNotFoundException(messageSource));
+        User user = userRepository.findByEmail(loggedUser.getEmail()).orElseThrow(() -> new UserNotFoundException(messageSource));
+
+        if (organisation.getMembers().contains(user)) {
+            throw new UserAlreadyMemberOfTheOrganisation(messageSource);
+        }
+
+        organisation.getMembers().add(user);
+        Organisation updatedOrganisation = organisationRepository.save(organisation);
+
+        return modelMapper.map(updatedOrganisation, OrganisationResponseDTO.class);
+    }
+
+    @Override
+    public OrganisationResponseDTO removeMemberFromOrganisation(UUID organisationId, PublicUserDTO loggedUser) {
+        Organisation organisation = organisationRepository.findByIdAndDeletedAtIsNull(organisationId).orElseThrow(() -> new OrganisationNotFoundException(messageSource));
+        User user = userRepository.findByEmail(loggedUser.getEmail()).orElseThrow(() -> new UserNotFoundException(messageSource));
+
+        if (!organisation.getMembers().contains(user)) {
+            throw new UserNotMemberOfTheOrganisation(messageSource);
+        }
+
+        organisation.getMembers().remove(user);
+        Organisation updatedOrganisation = organisationRepository.save(organisation);
+
+        return modelMapper.map(updatedOrganisation, OrganisationResponseDTO.class);
+    }
+
+    @Override
+    public Set<PublicUserDTO> listMembersOfOrganisation(UUID organisationId) {
+        Organisation organisation = organisationRepository.findByIdAndDeletedAtIsNull(organisationId).orElseThrow(() -> new OrganisationNotFoundException(messageSource));
+        Set<User> members = organisation.getMembers();
+
+        return members.stream()
+                .map(user -> modelMapper.map(user, PublicUserDTO.class))
+                .collect(Collectors.toSet());
     }
 
     private Set<User> findUsersByIds(Set<UUID> userIds) {

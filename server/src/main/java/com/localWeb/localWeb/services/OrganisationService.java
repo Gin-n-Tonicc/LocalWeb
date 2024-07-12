@@ -5,6 +5,7 @@ import com.localWeb.localWeb.models.dto.request.OrganisationRequestDTO;
 import com.localWeb.localWeb.models.dto.response.OrganisationResponseDTO;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public interface OrganisationService {
@@ -18,4 +19,10 @@ public interface OrganisationService {
     List<OrganisationResponseDTO> getAllOrganisations(PublicUserDTO loggedUser);
 
     void deleteOrganisation(UUID id, PublicUserDTO loggedUser);
+
+    OrganisationResponseDTO addMemberToOrganisation(UUID organisationId, PublicUserDTO loggedUser);
+
+    OrganisationResponseDTO removeMemberFromOrganisation(UUID organisationId, PublicUserDTO loggedUser);
+
+    Set<PublicUserDTO> listMembersOfOrganisation(UUID organisationId);
 }

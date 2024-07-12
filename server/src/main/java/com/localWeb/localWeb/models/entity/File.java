@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -23,4 +22,7 @@ public class File extends BaseEntity {
     @NotNull(message = "The path of the file should not be null!")
     private String path;
     private Long size;
+
+    @ManyToMany(mappedBy = "files")
+    private Set<Organisation> organisations = new HashSet<>();
 }

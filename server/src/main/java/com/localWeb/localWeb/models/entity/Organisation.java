@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -30,9 +29,9 @@ public class Organisation extends BaseEntity {
     @Size(min = 60, max = 400, message = "The description must be between 60 and 400 symbols!")
     private String description;
 
-    @Email(message = "Email should be a well-formatted email!")
     @NotNull(message = "The email should not be null!")
     @Column(unique = true)
+    @Email(message = "Email should be a well-formatted email!")
     private String email;
 
     private String websiteUrl;
@@ -59,7 +58,13 @@ public class Organisation extends BaseEntity {
     @ToString.Exclude
     private Set<User> owners = new HashSet<>();
 
-    @OneToMany(mappedBy = "id")
+    @ManyToMany
+    @JoinTable(
+            name = "organisation_files",
+            joinColumns = @JoinColumn(name = "organisation_id"),
+            inverseJoinColumns = @JoinColumn(name = "file_id")
+    )
+    @ToString.Exclude
     private Set<File> files = new HashSet<>();
 
     @PrePersist

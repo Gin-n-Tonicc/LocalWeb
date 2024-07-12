@@ -1,6 +1,5 @@
 package com.localWeb.localWeb.models.dto.request;
 
-import com.localWeb.localWeb.models.dto.auth.PublicUserDTO;
 import com.localWeb.localWeb.models.dto.common.OrganisationDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;

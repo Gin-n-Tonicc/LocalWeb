@@ -49,8 +49,7 @@ public class User extends BaseEntity implements UserDetails {
     private Set<Organisation> memberOrganisations = new HashSet<>();
 
     @ManyToMany(mappedBy = "owners")
-    @ToString.Exclude
-    private Set<Organisation> ownerOrganisations = new HashSet<>();
+    private Set<Organisation> organisations = new HashSet<>();
 
     @OneToMany(mappedBy = "phoneable", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude

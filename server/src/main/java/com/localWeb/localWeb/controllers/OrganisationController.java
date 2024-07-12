@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -29,13 +30,13 @@ public class OrganisationController {
     public OrganisationController(OrganisationService organisationService) {
         this.organisationService = organisationService;
     }
-//
-//    @Operation(summary = "Get all organisations", description = "Retrieves a list of all organisations")
-//    @GetMapping
-//    public ResponseEntity<List<OrganisationResponseDT>> getAllOrganisations() {
-//        return ResponseEntity.ok(organisationService.getAllOrganisations());
-//    }
-//
+
+    @Operation(summary = "Get all organisations", description = "Retrieves a list of all organisations")
+    @GetMapping("/all")
+    public ResponseEntity<List<OrganisationResponseDTO>> getAllOrganisations(HttpServletRequest httpServletRequest) {
+        return ResponseEntity.ok(organisationService.getAllOrganisations((PublicUserDTO) httpServletRequest.getAttribute(JwtAuthenticationFilter.userKey)));
+    }
+
     @Operation(summary = "Get organisation by id", description = "Retrieves an organisation by its unique identifier")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OrganisationResponseDTO.class)))
     @ApiResponse(responseCode = "404", description = "Organisation not found")

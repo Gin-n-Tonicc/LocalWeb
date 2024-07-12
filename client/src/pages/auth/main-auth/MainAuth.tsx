@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
-import { PageEnum } from '../../types/enums/PageEnum';
-import './Auth.scss';
-import AuthTabSwitch from './components/auth-tab-switch/AuthTabSwitch';
+import { PageEnum } from '../../../types/enums/PageEnum';
+import '../Auth.scss';
+import AuthTabSwitch from '../components/auth-tab-switch/AuthTabSwitch';
 import LoginForm from './components/login-form/LoginForm';
 import RegisterForm from './components/register-form/RegisterForm';
 
@@ -10,7 +10,7 @@ const pathComponentMap = new Map<string, JSX.Element>([
   [PageEnum.REGISTER, <RegisterForm />],
 ]);
 
-function Auth() {
+function MainAuth() {
   const location = useLocation();
 
   return (
@@ -36,4 +36,4 @@ function Auth() {
   );
 }
 
-export default Auth;
+export default MainAuth;

@@ -1,0 +1,14 @@
+@import '../../../sass/variables.scss';
+
+.FormErrorWrapper-container {
+  position: relative;
+  margin-bottom: 0.1rem;
+}
+
+.FormErrorWrapper-error {
+  color: $red;
+  font-size: 78%;
+  bottom: -1.05rem;
+  position: absolute;
+  left: 0.2rem;
+}

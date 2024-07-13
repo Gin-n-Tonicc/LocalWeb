@@ -8,6 +8,8 @@ interface ProtectedRouteProps {
   hasNotFinishedOAuth2?: boolean;
 }
 
+export const REDIRECT_KEY = 'redirect';
+
 function ProtectedRoute({
   onlyUser,
   hasNotFinishedOAuth2,
@@ -20,7 +22,7 @@ function ProtectedRoute({
     (path: string) => {
       const navPath: To = {
         pathname: path,
-        search: `?redirect=${pathname}`,
+        search: `?${REDIRECT_KEY}=${pathname}`,
       };
       return navPath;
     },

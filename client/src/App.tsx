@@ -8,6 +8,7 @@ import { LocationProvider } from './contexts/LocationContext';
 import { ToastProvider } from './contexts/ToastContext';
 import FinishRegister from './pages/auth/finish-register/FinishRegister';
 import ForgotPassword from './pages/auth/forgot-password/ForgotPassword';
+import Logout from './pages/auth/logout/Logout';
 import MainAuth from './pages/auth/main-auth/MainAuth';
 import { PageEnum } from './types/enums/PageEnum';
 
@@ -30,7 +31,7 @@ function App() {
                     />
                   </Route>
 
-                  {/* Only logged users BUT NOT FINISHED OAUTH2 */}
+                  {/* Only logged users BUT **NOT** FINISHED OAUTH2 */}
                   <Route
                     element={
                       <ProtectedRoute
@@ -42,6 +43,11 @@ function App() {
                       path={PageEnum.FINISH_REGISTER}
                       element={<FinishRegister />}
                     />
+                  </Route>
+
+                  {/* Only logged users BUT **WITH** FINISHED OAUTH2 */}
+                  <Route element={<ProtectedRoute onlyUser={true} />}>
+                    <Route path={PageEnum.LOGOUT} element={<Logout />} />
                   </Route>
                 </Routes>
               </Authenticate>

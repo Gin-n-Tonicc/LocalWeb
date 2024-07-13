@@ -1,6 +1,7 @@
 package com.localWeb.localWeb.models.entity;
 
 import com.localWeb.localWeb.models.baseEntity.BaseEntity;
+import com.localWeb.localWeb.utils.SlugUtils;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -35,4 +36,10 @@ public class Lesson extends BaseEntity {
     @ManyToMany(mappedBy = "lessons")
     @ToString.Exclude
     private Set<User> users = new HashSet<>();
+
+    @PrePersist
+    @PreUpdate
+    private void updateSlug() {
+        this.slug = SlugUtils.generateSlug(this.name);
+    }
 }

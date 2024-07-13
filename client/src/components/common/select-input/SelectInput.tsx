@@ -1,3 +1,4 @@
+import { FieldValues, Path, PathValue, UseFormSetValue } from 'react-hook-form';
 import Select, {
   ControlProps,
   CSSObjectWithLabel,
@@ -17,6 +18,20 @@ interface SelectInputProps {
   hasError?: boolean;
   placeholder?: string;
   defaultValue?: SingleValue<SelectOption>;
+}
+
+export function handleOptionChange<T extends FieldValues>(
+  key: Path<T>,
+  vFromInput: PathValue<T, Path<T>> | undefined,
+  setValue: UseFormSetValue<T>
+): void {
+  const v = vFromInput?.toString() || '';
+
+  setValue(key, v, {
+    shouldValidate: true,
+    shouldDirty: true,
+    shouldTouch: true,
+  });
 }
 
 // The component that displays a dropdown with values based on the props

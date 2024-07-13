@@ -7,23 +7,25 @@ import { ICity } from '../../../../../../types/interfaces/location/ICity';
 import { ICountry } from '../../../../../../types/interfaces/location/ICountry';
 import CitySelect from '../../../../components/city-select/CitySelect';
 import PhoneInput, {
+  ICountriesReduced,
   reduceCountries,
 } from '../../../../components/phone-input/PhoneInput';
+import {
+  ADDRESS_VALIDATIONS,
+  PHONE_NUMBER_VALIDATIONS,
+  SELECT_TOWN_VALIDATIONS,
+} from '../../../../validations-common';
 import {
   AdditionalStepperForm,
   IAdditionalStepper,
   StepperButtonEnum,
 } from '../types';
-import {
-  ADDRESS_VALIDATIONS,
-  PHONE_NUMBER_VALIDATIONS,
-  SELECT_TOWN_VALIDATIONS,
-} from './validations';
 
 interface RegisterFormAdditionalProps {
   currentState: IAdditionalStepper;
   cities: ICity[];
   countries: ICountry[];
+  countriesReduced: ICountriesReduced;
   previousStep: (v: IAdditionalStepper) => void;
   submit: (v: IAdditionalStepper) => void;
 }
@@ -97,7 +99,7 @@ function RegisterFormAdditional({
               control={control}
               name="cityId"
               customComponent={
-                <CitySelect<AdditionalStepperForm>
+                <CitySelect
                   cities={props.cities}
                   error={errors.cityId}
                   idToFindBy={currentState.primaryAddress.cityId}

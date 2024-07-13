@@ -1,24 +1,46 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import FormInput from '../../../../components/common/form-input/FormInput';
+import { useLocationContext } from '../../../../contexts/LocationContext';
+import CitySelect from '../../components/city-select/CitySelect';
+import PhoneInput from '../../components/phone-input/PhoneInput';
 import rocketImage from '../../img/rocket.png';
 import {
+  ADDRESS_VALIDATIONS,
   FIRST_NAME_VALIDATIONS,
+  PHONE_NUMBER_VALIDATIONS,
+  SELECT_TOWN_VALIDATIONS,
   SUR_NAME_VALIDATIONS,
 } from '../../validations-common';
 
 type FinishRegisterFormTypes = {
   name: string;
   surname: string;
+  cityId: string;
+  line: string;
+  number: string;
+  country: string;
 };
 
 function FinishRegisterForm() {
-  const { handleSubmit, control, watch } = useForm<FinishRegisterFormTypes>({
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<FinishRegisterFormTypes>({
     defaultValues: {
       name: '',
       surname: '',
+      cityId: '',
+      line: '',
+      number: '',
+      country: '',
     },
     mode: 'onSubmit',
   });
+
+  const { cities, countries, countriesReduced } = useLocationContext();
 
   const onSubmit: SubmitHandler<FinishRegisterFormTypes> = (v) => {};
 
@@ -52,6 +74,55 @@ function FinishRegisterForm() {
               id="register-sur-name"
               name="surname"
               rules={SUR_NAME_VALIDATIONS}
+            />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-item mb-4">
+            <FormInput
+              control={control}
+              name="cityId"
+              customComponent={
+                <CitySelect
+                  cities={cities}
+                  error={errors.cityId}
+                  idToFindBy={''}
+                  keyToSetValueTo="cityId"
+                  setValue={setValue}
+                />
+              }
+              rules={SELECT_TOWN_VALIDATIONS}
+            />
+          </div>
+
+          <div className="form-item">
+            <FormInput
+              control={control}
+              type="text"
+              placeholder="Your address"
+              id="register-address1"
+              name="line"
+              rules={ADDRESS_VALIDATIONS}
+            />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-item mb-5">
+            <FormInput
+              control={control}
+              name="number"
+              customComponent={
+                <PhoneInput
+                  placeholder="Enter phone number"
+                  currentNumber={watch('number')}
+                  currentCountry={watch('country')}
+                  countries={countriesReduced}
+                  keyToSetNumber="number"
+                  keyToSetCountry="country"
+                  setValue={setValue}
+                />
+              }
+              rules={PHONE_NUMBER_VALIDATIONS}
             />
           </div>
         </div>

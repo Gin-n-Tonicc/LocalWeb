@@ -14,7 +14,7 @@ export default function useAuthenticate(shouldLogoutUser: boolean = true) {
   useEffect(() => {
     async function fetchApi() {
       const data = await get();
-      console.log('getted');
+
       if (response.ok) {
         loginUser(data);
       } else if (shouldLogoutUser) {

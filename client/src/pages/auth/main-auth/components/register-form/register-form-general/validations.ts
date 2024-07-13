@@ -11,19 +11,3 @@ export const REPEAT_PASSWORD_VALIDATIONS = (
     }
   },
 });
-
-export const FIRST_NAME_VALIDATIONS: RegisterOptions = {
-  required: 'auth.first.name.required',
-  minLength: {
-    value: 2,
-    message: 'auth.first.name.invalid.min-length',
-  },
-};
-
-export const SUR_NAME_VALIDATIONS: RegisterOptions = {
-  required: 'auth.sur.name.required',
-  minLength: {
-    value: 2,
-    message: 'auth.sur.name.invalid.min-length',
-  },
-};

@@ -4,6 +4,7 @@ import Authenticate from './components/authenticate/Authenticate';
 import HttpProvider from './components/http-provider/HttpProvider';
 import { AuthProvider } from './contexts/AuthContext';
 import { ToastProvider } from './contexts/ToastContext';
+import FinishRegister from './pages/auth/finish-register/FinishRegister';
 import ForgotPassword from './pages/auth/forgot-password/ForgotPassword';
 import MainAuth from './pages/auth/main-auth/MainAuth';
 import { PageEnum } from './types/enums/PageEnum';
@@ -21,6 +22,10 @@ function App() {
                 <Route
                   path={PageEnum.FORGOT_PASSWORD}
                   element={<ForgotPassword />}
+                />
+                <Route
+                  path={PageEnum.FINISH_REGISTER}
+                  element={<FinishRegister />}
                 />
               </Routes>
             </Authenticate>

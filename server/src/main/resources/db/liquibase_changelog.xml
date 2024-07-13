@@ -21,4 +21,6 @@
     <include file="changelogs/015_schedules.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/016_comments.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/017_events.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/018_insert_countries.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/019_insert_cities.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

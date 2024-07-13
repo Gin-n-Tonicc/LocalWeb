@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+    <changeSet id="2" author="LocalWeb">
+        <insert tableName="cities">
+            <column name="id" value="9ee87c31-5058-4c80-a4c8-c26781f6f7cf"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Targovishte"/>
+            <column name="slug" value="targovishte"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="e49d82b9-2cea-47e8-a023-6fb7ba06baf9"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Sofia"/>
+            <column name="slug" value="sofia"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="b8f6f95e-2ec2-4c78-95cb-3c60e0cfa2d3"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Plovdiv"/>
+            <column name="slug" value="plovdiv"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="1d56c45f-3c25-4428-90ee-5c56bc287a5e"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Varna"/>
+            <column name="slug" value="varna"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="6f09b2e4-9a02-4aa6-8003-178de0ffb3a8"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Burgas"/>
+            <column name="slug" value="burgas"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="393be0b8-6f35-4e89-aed3-e7eb7e10d82e"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Ruse"/>
+            <column name="slug" value="ruse"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="9a898e81-84d0-4522-9474-475c4073b200"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Stara Zagora"/>
+            <column name="slug" value="stara-zagora"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="de8dd1a4-510c-4a3e-aa5f-58b529aeda94"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Pleven"/>
+            <column name="slug" value="pleven"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="7b95f459-e79d-4a5d-bcde-a8d3c8e2f418"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Sliven"/>
+            <column name="slug" value="sliven"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="c19b7055-7d5d-49ca-8e42-6938d89fd19a"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Dobrich"/>
+            <column name="slug" value="dobrich"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="974b3c4f-4f36-4fe2-bc35-f89999371425"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Shumen"/>
+            <column name="slug" value="shumen"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="e1e63887-5453-476c-a873-25d42859937e"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Pernik"/>
+            <column name="slug" value="pernik"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="3c1cd3ab-fae5-4474-8b95-000cfd8a6fe9"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Yambol"/>
+            <column name="slug" value="yambol"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="b41bebd7-072c-4765-8bfe-46c0945a3852"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Haskovo"/>
+            <column name="slug" value="haskovo"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="384b87e5-c905-4f79-8938-a6072f71c3cb"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Blagoevgrad"/>
+            <column name="slug" value="blagoevgrad"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="2f23f18c-5cff-49d9-8320-ef6a08d63a85"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Veliko Tarnovo"/>
+            <column name="slug" value="veliko-tarnovo"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+        <insert tableName="cities">
+            <column name="id" value="e92f61ed-ad63-4a5e-ab9d-7b1d5a0dac8f"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Vratsa"/>
+            <column name="slug" value="vratsa"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="6873fcc8-7b77-46e1-ba75-1c0cb3d3b732"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Gabrovo"/>
+            <column name="slug" value="gabrovo"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="9645d8e6-6015-4d20-983d-1eec7d0c3cac"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Kyustendil"/>
+            <column name="slug" value="kyustendil"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="15bbad72-bcbd-48a8-86f8-e3441e1287a2"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Vidin"/>
+            <column name="slug" value="vidin"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="f7612841-4080-4500-bb04-8d7690cddfd4"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Asenovgrad"/>
+            <column name="slug" value="asenovgrad"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="54817835-f235-4cbc-a5db-7da7d9d9301a"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Karnobat"/>
+            <column name="slug" value="karnobat"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="48982f8f-2a87-4848-a541-dcd0de3f1534"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Dupnitsa"/>
+            <column name="slug" value="dupnitsa"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="d0cb0d74-dc35-4b8a-8f3f-6e6f42a0ffdc"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Lovech"/>
+            <column name="slug" value="lovech"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="083dcd12-b3e1-4bb1-8c02-0adc50997a85"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Montana"/>
+            <column name="slug" value="montana"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="b0f52599-d5d9-4e33-87e0-bded489bfe35"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Pazardzhik"/>
+            <column name="slug" value="pazardzhik"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="cf8724bc-070f-47fb-856f-3c8bb6ff3fd7"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Petrich"/>
+            <column name="slug" value="petrich"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="a53ba3db-15b3-4d9c-b5e0-572daf7e4e03"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Sandanski"/>
+            <column name="slug" value="sandanski"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="c65094d3-59c9-425e-9b7b-50b306dbf9c1"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Gorna Oryahovitsa"/>
+            <column name="slug" value="gorna-oryahovitsa"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="ddc7c8f4-ad18-45db-92d2-5ebcdaec0124"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Svishtov"/>
+            <column name="slug" value="svishtov"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="f134dff4-5b11-468c-baa2-2308fb7c98ea"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Troyan"/>
+            <column name="slug" value="troyan"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="2f736d3b-6087-4fa6-8401-d95e0e9c76ae"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Botevgrad"/>
+            <column name="slug" value="botevgrad"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="688dfdee-5e44-49b6-8b72-f73d4b912fb5"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Kazahnalak"/>
+            <column name="slug" value="kazanlak"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+
+        <insert tableName="cities">
+            <column name="id" value="84beb98d-4ec0-4e90-afbf-783be5bb82ef"/>
+            <column name="country_id" value="11111111-1111-1111-1111-111111111120"/>
+            <column name="name" value="Panagyurishte"/>
+            <column name="slug" value="panagyurishte"/>
+            <column name="created_at" value="2024-07-13 12:00:00"/>
+            <column name="updated_at" value="2024-07-13 12:00:00"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

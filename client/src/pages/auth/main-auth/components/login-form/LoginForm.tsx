@@ -1,9 +1,11 @@
+import { useMemo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useFetch } from 'use-http';
 import { oauth2Urls } from '../../../../../api';
 import { authUrls } from '../../../../../api/auth/auth';
 import FormInput from '../../../../../components/common/form-input/FormInput';
+import { REDIRECT_KEY } from '../../../../../components/common/protected-route/ProtectedRoute';
 import { useAuthContext } from '../../../../../contexts/AuthContext';
 import { PageEnum } from '../../../../../types/enums/PageEnum';
 import { IAuthResponse } from '../../../../../types/interfaces/auth/IAuthResponse';
@@ -20,6 +22,12 @@ type Inputs = {
 };
 
 function LoginForm() {
+  const [searchParams, _] = useSearchParams();
+  const redirectTo = useMemo(
+    () => searchParams.get(REDIRECT_KEY),
+    [searchParams]
+  );
+
   const navigate = useNavigate();
   const { loginUser } = useAuthContext();
 
@@ -31,7 +39,7 @@ function LoginForm() {
       email: '',
       password: '',
     },
-    mode: 'onChange',
+    mode: 'onSubmit',
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -45,8 +53,11 @@ function LoginForm() {
       reset();
       loginUser(user);
 
-      // TODO: Redirect to Home
-      navigate(PageEnum.LOGIN);
+      if (redirectTo) {
+        navigate(redirectTo);
+      } else {
+        navigate(PageEnum.HOME);
+      }
     }
   };
 

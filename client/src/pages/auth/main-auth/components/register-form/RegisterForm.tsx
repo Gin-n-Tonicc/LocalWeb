@@ -1,12 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useFetch } from 'use-http';
 import { authUrls } from '../../../../../api/auth/auth';
-import { cityUrls } from '../../../../../api/location/city';
-import { countryUrls } from '../../../../../api/location/country';
+import { useLocationContext } from '../../../../../contexts/LocationContext';
 import { useToastContext } from '../../../../../contexts/ToastContext';
 import { IAuthResponse } from '../../../../../types/interfaces/auth/IAuthResponse';
-import { ICity } from '../../../../../types/interfaces/location/ICity';
-import { ICountry } from '../../../../../types/interfaces/location/ICountry';
 import rocketImage from '../../../img/rocket.png';
 import RegisterFormAdditional from './register-form-additional/RegisterFormAdditional';
 import RegisterFormGeneral from './register-form-general/RegisterFormGeneral';
@@ -35,10 +32,9 @@ const DEFAULT_STEPPER_STATE: IStepperState = {
 
 function RegisterForm() {
   const [stepperState, setStepperState] = useState(DEFAULT_STEPPER_STATE);
+  const { cities, countries, countriesReduced } = useLocationContext();
   const { info } = useToastContext();
 
-  const { data: cities } = useFetch<ICity[]>(cityUrls.fetchAll, []);
-  const { data: countries } = useFetch<ICountry[]>(countryUrls.fetchAll, []);
   const { post: postUser, response: responseUser } = useFetch<IAuthResponse>(
     authUrls.register
   );
@@ -99,15 +95,24 @@ function RegisterForm() {
         [
           StepperEnum.ADDITIONAL_INFO,
           <RegisterFormAdditional
-            cities={cities || []}
-            countries={countries || []}
+            cities={cities}
+            countries={countries}
+            countriesReduced={countriesReduced}
             previousStep={previousStep}
             submit={handleSubmit}
             currentState={stepperState[StepperEnum.ADDITIONAL_INFO]}
           />,
         ],
       ]),
-    [stepperState, countries, cities, nextStep, previousStep, handleSubmit]
+    [
+      stepperState,
+      countries,
+      cities,
+      countriesReduced,
+      nextStep,
+      previousStep,
+      handleSubmit,
+    ]
   );
 
   return (

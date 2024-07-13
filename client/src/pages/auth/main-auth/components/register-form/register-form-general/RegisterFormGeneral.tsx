@@ -2,18 +2,16 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import FormInput from '../../../../../../components/common/form-input/FormInput';
 import {
   EMAIL_VALIDATIONS,
+  FIRST_NAME_VALIDATIONS,
   PASSWORD_VALIDATIONS,
+  SUR_NAME_VALIDATIONS,
 } from '../../../../validations-common';
 import {
   IGeneralStepper,
   IGeneralStepperForm,
   StepperButtonEnum,
 } from '../types';
-import {
-  FIRST_NAME_VALIDATIONS,
-  REPEAT_PASSWORD_VALIDATIONS,
-  SUR_NAME_VALIDATIONS,
-} from './validations';
+import { REPEAT_PASSWORD_VALIDATIONS } from './validations';
 
 interface RegisterFormGeneralProps {
   currentState: IGeneralStepper;

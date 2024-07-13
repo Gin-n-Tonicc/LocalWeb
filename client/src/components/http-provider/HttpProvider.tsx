@@ -56,13 +56,14 @@ function HttpProvider({ children }: PropsWithChildren) {
             !initialAuthUtils.hasFinishedInitialAuth() &&
             response.status === 401
           ) {
+            initialAuthUtils.finishInitialAuth();
             return response;
           }
 
           const data = response.data;
           const toastId = `${data.message}${data.status}${data.statusCode}`;
 
-          const message = response.data.message || '';
+          const message = data.message || '';
           error(message, toastId);
         }
 

@@ -3,7 +3,6 @@ import { useFetch } from 'use-http';
 import { authUrls } from '../api/auth/auth';
 import { useAuthContext } from '../contexts/AuthContext';
 import { IAuthResponse } from '../types/interfaces/auth/IAuthResponse';
-import { initialAuthUtils } from '../utils/initialAuthUtils';
 
 // The hook that authenticates our user
 export default function useAuthenticate(shouldLogoutUser: boolean = true) {
@@ -15,8 +14,6 @@ export default function useAuthenticate(shouldLogoutUser: boolean = true) {
   useEffect(() => {
     async function fetchApi() {
       const data = await get();
-
-      initialAuthUtils.finishInitialAuth();
 
       if (response.ok) {
         loginUser(data);

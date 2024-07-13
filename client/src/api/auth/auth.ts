@@ -5,6 +5,7 @@ export const authUrls = Object.seal({
   register: `${baseApiUrl}/auth/register`,
   login: `${baseApiUrl}/auth/authenticate`,
   logout: `${baseApiUrl}/auth/logout`,
+  completeOAuth: `${baseApiUrl}/auth/complete-oauth`,
   refreshTokenPath: '/auth/refresh-token',
   refreshToken() {
     return `${baseApiUrl}${this.refreshTokenPath}`;

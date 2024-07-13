@@ -22,7 +22,7 @@ public class RateLimitAspect {
         this.messageSource = messageSource;
     }
 
-    @Before("@annotation(com.coolSchool.coolSchool.interfaces.RateLimited)")
+    @Before("@annotation(com.localWeb.localWeb.interfaces.RateLimited)")
     public void enforceRateLimit() {
         String key = String.valueOf(System.currentTimeMillis() / 60000); // 60000 is 1 minute
         AtomicInteger counter = requestCounters.computeIfAbsent(key, k -> new AtomicInteger(0));

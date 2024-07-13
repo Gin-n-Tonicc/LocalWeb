@@ -4,4 +4,5 @@ export enum PageEnum {
   REGISTER = '/register',
   FORGOT_PASSWORD = '/forgotten-password',
   FINISH_REGISTER = '/finish-register',
+  LOGOUT = '/logout',
 }

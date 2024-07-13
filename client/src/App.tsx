@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import Authenticate from './components/authenticate/Authenticate';
+import ProtectedRoute from './components/common/protected-route/ProtectedRoute';
 import HttpProvider from './components/http-provider/HttpProvider';
 import { AuthProvider } from './contexts/AuthContext';
 import { LocationProvider } from './contexts/LocationContext';
@@ -19,16 +20,29 @@ function App() {
             <LocationProvider>
               <Authenticate>
                 <Routes>
-                  <Route path={PageEnum.LOGIN} element={<MainAuth />} />
-                  <Route path={PageEnum.REGISTER} element={<MainAuth />} />
+                  {/* Only guests */}
+                  <Route element={<ProtectedRoute onlyUser={false} />}>
+                    <Route path={PageEnum.LOGIN} element={<MainAuth />} />
+                    <Route path={PageEnum.REGISTER} element={<MainAuth />} />
+                    <Route
+                      path={PageEnum.FORGOT_PASSWORD}
+                      element={<ForgotPassword />}
+                    />
+                  </Route>
+
+                  {/* Only logged users BUT NOT FINISHED OAUTH2 */}
                   <Route
-                    path={PageEnum.FORGOT_PASSWORD}
-                    element={<ForgotPassword />}
-                  />
-                  <Route
-                    path={PageEnum.FINISH_REGISTER}
-                    element={<FinishRegister />}
-                  />
+                    element={
+                      <ProtectedRoute
+                        onlyUser={true}
+                        hasNotFinishedOAuth2={true}
+                      />
+                    }>
+                    <Route
+                      path={PageEnum.FINISH_REGISTER}
+                      element={<FinishRegister />}
+                    />
+                  </Route>
                 </Routes>
               </Authenticate>
             </LocationProvider>

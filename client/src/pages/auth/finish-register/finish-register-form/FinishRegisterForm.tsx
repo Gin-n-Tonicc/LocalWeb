@@ -1,8 +1,17 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useFetch } from 'use-http';
+import { authUrls } from '../../../../api/auth/auth';
 import FormInput from '../../../../components/common/form-input/FormInput';
+import { useAuthContext } from '../../../../contexts/AuthContext';
 import { useLocationContext } from '../../../../contexts/LocationContext';
+import { useToastContext } from '../../../../contexts/ToastContext';
+import { PageEnum } from '../../../../types/enums/PageEnum';
+import { IAuthResponse } from '../../../../types/interfaces/auth/IAuthResponse';
 import CitySelect from '../../components/city-select/CitySelect';
-import PhoneInput from '../../components/phone-input/PhoneInput';
+import PhoneInput, {
+  DEFAULT_COUNTRY,
+} from '../../components/phone-input/PhoneInput';
 import rocketImage from '../../img/rocket.png';
 import {
   ADDRESS_VALIDATIONS,
@@ -22,6 +31,8 @@ type FinishRegisterFormTypes = {
 };
 
 function FinishRegisterForm() {
+  const { user, loginUser } = useAuthContext();
+
   const {
     handleSubmit,
     control,
@@ -30,8 +41,8 @@ function FinishRegisterForm() {
     formState: { errors },
   } = useForm<FinishRegisterFormTypes>({
     defaultValues: {
-      name: '',
-      surname: '',
+      name: user.name || '',
+      surname: user.surname || '',
       cityId: '',
       line: '',
       number: '',
@@ -40,9 +51,34 @@ function FinishRegisterForm() {
     mode: 'onSubmit',
   });
 
-  const { cities, countries, countriesReduced } = useLocationContext();
+  const { cities, countriesReduced } = useLocationContext();
+  const { success } = useToastContext();
+  const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<FinishRegisterFormTypes> = (v) => {};
+  const { put, response } = useFetch<IAuthResponse>(authUrls.completeOAuth);
+
+  const onSubmit: SubmitHandler<FinishRegisterFormTypes> = async (v) => {
+    const body = {
+      name: v.name.trim(),
+      surname: v.surname.trim(),
+      phone: {
+        country:
+          countriesReduced.mapAlpha2ToId[v.country.trim() || DEFAULT_COUNTRY],
+        number: v.number.trim(),
+      },
+      primaryAddress: {
+        line: v.line.trim(),
+        cityId: v.cityId.trim(),
+      },
+    };
+
+    const user = await put(body);
+    if (response.ok) {
+      loginUser(user);
+      success('Successfully registered!');
+      navigate(PageEnum.HOME);
+    }
+  };
 
   return (
     <div className="form-box login-register-form-element login-form">

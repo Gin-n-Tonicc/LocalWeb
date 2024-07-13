@@ -44,9 +44,7 @@ function LoginForm() {
     if (response.ok) {
       reset();
       loginUser(user);
-
-      // TODO: Redirect to Home
-      navigate(PageEnum.LOGIN);
+      navigate(PageEnum.HOME);
     }
   };
 

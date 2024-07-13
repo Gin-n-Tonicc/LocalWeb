@@ -56,6 +56,7 @@ function HttpProvider({ children }: PropsWithChildren) {
             !initialAuthUtils.hasFinishedInitialAuth() &&
             response.status === 401
           ) {
+            initialAuthUtils.finishInitialAuth();
             return response;
           }
 

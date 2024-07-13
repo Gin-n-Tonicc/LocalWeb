@@ -39,7 +39,7 @@ function LoginForm() {
       email: '',
       password: '',
     },
-    mode: 'onChange',
+    mode: 'onSubmit',
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {

@@ -48,7 +48,7 @@ function RegisterFormAdditional({
       country: currentState.phone.country,
       number: currentState.phone.number,
     },
-    mode: 'onChange',
+    mode: 'onSubmit',
   });
 
   const countries = useMemo(

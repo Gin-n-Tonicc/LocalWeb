@@ -1,14 +1,19 @@
+import { useMemo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useFetch } from 'use-http';
-import { oauth2Urls } from '../../../../api';
-import { authUrls } from '../../../../api/auth/auth';
-import FormInput from '../../../../components/common/form-input/FormInput';
-import { useAuthContext } from '../../../../contexts/AuthContext';
-import { PageEnum } from '../../../../types/enums/PageEnum';
-import { IAuthResponse } from '../../../../types/interfaces/auth/IAuthResponse';
-import rocketImage from '../../img/rocket.png';
-import facebookIcon from './img/icons/facebook.svg';
+import { oauth2Urls } from '../../../../../api';
+import { authUrls } from '../../../../../api/auth/auth';
+import FormInput from '../../../../../components/common/form-input/FormInput';
+import { REDIRECT_KEY } from '../../../../../components/common/protected-route/ProtectedRoute';
+import { useAuthContext } from '../../../../../contexts/AuthContext';
+import { PageEnum } from '../../../../../types/enums/PageEnum';
+import { IAuthResponse } from '../../../../../types/interfaces/auth/IAuthResponse';
+import rocketImage from '../../../img/rocket.png';
+import {
+  EMAIL_VALIDATIONS,
+  PASSWORD_VALIDATIONS,
+} from '../../../validations-common';
 import googleIcon from './img/icons/google.svg';
 
 type Inputs = {
@@ -17,6 +22,12 @@ type Inputs = {
 };
 
 function LoginForm() {
+  const [searchParams, _] = useSearchParams();
+  const redirectTo = useMemo(
+    () => searchParams.get(REDIRECT_KEY),
+    [searchParams]
+  );
+
   const navigate = useNavigate();
   const { loginUser } = useAuthContext();
 
@@ -28,7 +39,7 @@ function LoginForm() {
       email: '',
       password: '',
     },
-    mode: 'onChange',
+    mode: 'onSubmit',
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -42,8 +53,11 @@ function LoginForm() {
       reset();
       loginUser(user);
 
-      // TODO: Redirect to Home
-      navigate(PageEnum.LOGIN);
+      if (redirectTo) {
+        navigate(redirectTo);
+      } else {
+        navigate(PageEnum.HOME);
+      }
     }
   };
 
@@ -64,6 +78,7 @@ function LoginForm() {
               placeholder="Email"
               id="login-email"
               name="email"
+              rules={EMAIL_VALIDATIONS}
             />
           </div>
         </div>
@@ -75,28 +90,16 @@ function LoginForm() {
               placeholder="Password"
               id="login-password"
               name="password"
+              rules={PASSWORD_VALIDATIONS}
             />
           </div>
         </div>
         <div className="form-row space-between">
+          <div className="form-item"></div>
           <div className="form-item">
-            {/* <div className="checkbox-wrap">
-                  <input
-                    type="checkbox"
-                    id="login-remember"
-                    name="login_remember"
-                    {...register()}
-                  />
-                  <div className="checkbox-box">
-                    <img src={markIcon} />
-                  </div>
-                  <label htmlFor="login-remember">Remember Me</label>
-                </div> */}
-          </div>
-          <div className="form-item">
-            <a className="form-link" href="#">
+            <Link className="form-link" to={PageEnum.FORGOT_PASSWORD}>
               Forgot Password?
-            </a>
+            </Link>
           </div>
         </div>
         <div className="form-row">
@@ -107,11 +110,6 @@ function LoginForm() {
       </form>
       <p className="lined-text">Login with your Social Account</p>
       <div className="social-links">
-        <a className="social-link facebook" href={oauth2Urls.facebook}>
-          <div className="facebook-icon">
-            <img src={facebookIcon} />
-          </div>
-        </a>
         <a className="social-link google" href={oauth2Urls.google}>
           <div className="google-icon">
             <img src={googleIcon} />

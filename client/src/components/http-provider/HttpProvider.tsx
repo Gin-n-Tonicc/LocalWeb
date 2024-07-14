@@ -3,12 +3,14 @@ import { CachePolicies, CustomOptions, Provider, useFetch } from 'use-http';
 import { authUrls } from '../../api/auth/auth';
 import { baseApiUrl } from '../../api/base';
 import { useAuthContext } from '../../contexts/AuthContext';
+import { useToastContext } from '../../contexts/ToastContext';
 import { IUser } from '../../types/interfaces/auth/IUser';
 import { initialAuthUtils, isJwtExpired } from '../../utils';
 
 // The component that is responsible for the useFetch hook options
 function HttpProvider({ children }: PropsWithChildren) {
   const { isAuthenticated, user, removeJwt, removeRefresh } = useAuthContext();
+  const { error } = useToastContext();
 
   // Prepare refresh token fetch
   const { get } = useFetch<IUser>(authUrls.refreshToken());
@@ -54,11 +56,15 @@ function HttpProvider({ children }: PropsWithChildren) {
             !initialAuthUtils.hasFinishedInitialAuth() &&
             response.status === 401
           ) {
+            initialAuthUtils.finishInitialAuth();
             return response;
           }
 
-          const message = response.data.message || '';
-          console.log(message);
+          const data = response.data;
+          const toastId = `${data.message}${data.status}${data.statusCode}`;
+
+          const message = data.message || '';
+          error(message, toastId);
         }
 
         return response;

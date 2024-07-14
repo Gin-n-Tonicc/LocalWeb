@@ -181,7 +181,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         List<Token> tokens = tokenService.findByUser(user);
-        Token refreshToken = tokens.stream().filter(x -> x.getTokenType() == TokenType.REFRESH).toList().get(0);
+        List<Token> refreshTokens = tokens.stream().filter(x -> x.getTokenType() == TokenType.REFRESH).toList();
+
+        if (refreshTokens.isEmpty()) {
+            throw new InvalidTokenException(messageSource);
+        }
+
+        Token refreshToken = refreshTokens.getFirst();
 
         if (refreshToken == null) {
             throw new InvalidTokenException(messageSource);

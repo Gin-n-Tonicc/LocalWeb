@@ -38,7 +38,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     setAuth({
       email: user?.email,
       id: user?.id,
-      firstname: user?.firstname,
+      name: user?.name,
       surname: user?.surname,
       role: user?.role,
       additionalInfoRequired: user?.additionalInfoRequired,

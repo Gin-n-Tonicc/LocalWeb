@@ -5,6 +5,7 @@ import com.localWeb.localWeb.enums.AddressableType;
 import com.localWeb.localWeb.models.baseEntity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Getter
@@ -16,6 +17,9 @@ import lombok.*;
 @Entity
 @Table(name = "addresses")
 public class Address extends BaseEntity {
+
+    @NotNull(message = "Enter some text for the address!")
+    @Size(min = 5, message = "The text foe the address should be at least 5 symbols!")
     private String line;
 
     @ManyToOne

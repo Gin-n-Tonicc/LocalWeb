@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react';
+import './FormErrorWrapper.scss';
 
 interface FormErrorWrapperProps extends PropsWithChildren {
   message: string | undefined;
@@ -7,13 +8,10 @@ interface FormErrorWrapperProps extends PropsWithChildren {
 // The component that displays an error below the given children
 function FormErrorWrapper(props: FormErrorWrapperProps) {
   return (
-    // <div className="form-group">
-    //   <div className="form-error-container">
-    //     {props.children}
-    //     <p className="form-error">{props.message}</p>
-    //   </div>
-    // </div>
-    <>{props.children}</>
+    <div className="FormErrorWrapper-container">
+      {props.children}
+      <p className="FormErrorWrapper-error">{props.message}</p>
+    </div>
   );
 }
 

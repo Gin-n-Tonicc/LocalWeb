@@ -3,7 +3,6 @@ package com.localWeb.localWeb.models.dto.response;
 import com.localWeb.localWeb.models.dto.auth.PublicUserDTO;
 import com.localWeb.localWeb.models.dto.common.FileDTO;
 import com.localWeb.localWeb.models.dto.common.OrganisationDTO;
-import com.localWeb.localWeb.models.entity.File;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

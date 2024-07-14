@@ -71,7 +71,9 @@ public class SecurityConfiguration {
                         "/oauth/**",
                         "/api/v1/countries/**",
                         "/api/v1/cities/**",
-                        "/api/v1/organisations/**"
+                        "/api/v1/organisations/**",
+                        "/api/v1/lessons/**",
+                        "/api/v1/groups/**"
                 )
                 .permitAll()
 //                .requestMatchers(GET, "/api/v1/courses/**").permitAll()

@@ -21,7 +21,7 @@ public class Group extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "lesson_id")
     @NotNull(message = "The lesson of the group should not be null!")
-    private Lesson group;
+    private Lesson lesson;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

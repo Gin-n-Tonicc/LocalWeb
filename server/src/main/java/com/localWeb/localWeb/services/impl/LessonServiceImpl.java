@@ -3,12 +3,12 @@ package com.localWeb.localWeb.services.impl;
 
 import com.localWeb.localWeb.exceptions.lesson.LessonNotFoundException;
 import com.localWeb.localWeb.exceptions.organisation.OrganisationNotFoundException;
-import com.localWeb.localWeb.exceptions.files.FileNotFoundException;
 import com.localWeb.localWeb.models.dto.request.LessonRequestDTO;
 import com.localWeb.localWeb.models.dto.response.LessonResponseDTO;
 import com.localWeb.localWeb.models.entity.Lesson;
-import com.localWeb.localWeb.repositories.OrganisationRepository;
+import com.localWeb.localWeb.models.entity.Organisation;
 import com.localWeb.localWeb.repositories.LessonRepository;
+import com.localWeb.localWeb.repositories.OrganisationRepository;
 import com.localWeb.localWeb.services.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,9 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -38,7 +36,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public List<LessonResponseDTO> getAllByOrganisation(UUID id) {
-        List<Lesson> lessons = lessonRepository.findAllByOrganisationIdAndDeletedFalse(id);
+        List<Lesson> lessons = lessonRepository.findAllByOrganisationIdAndDeletedAtIsNull(id);
         return lessons.stream().map(lesson -> modelMapper.map(lesson, LessonResponseDTO.class)).toList();
     }
 
@@ -53,24 +51,33 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public LessonResponseDTO createLesson(LessonRequestDTO lessonDTO) {
-        organisationRepository.findByIdAndDeletedAtIsNull(lessonDTO.getOrganisationId()).orElseThrow(() -> new OrganisationNotFoundException(messageSource));
-        Lesson lessonEntity = lessonRepository.save(modelMapper.map(lessonDTO, Lesson.class));
+        Organisation organisation = organisationRepository.findByIdAndDeletedAtIsNull(lessonDTO.getOrganisation())
+                .orElseThrow(() -> new OrganisationNotFoundException(messageSource));
+
+        Lesson lessonEntity = modelMapper.map(lessonDTO, Lesson.class);
+        lessonEntity.setOrganisation(organisation);
+        lessonEntity = lessonRepository.save(lessonEntity);
+
         return modelMapper.map(lessonEntity, LessonResponseDTO.class);
     }
 
     @Override
     public LessonResponseDTO updateLesson(UUID id, LessonRequestDTO lessonDTO) {
-        Optional<Lesson> existingLessonOptional = lessonRepository.findByIdAndDeletedAtIsNull(id);
+        Lesson existingLesson = lessonRepository.findByIdAndDeletedAtIsNull(id)
+                .orElseThrow(() -> new LessonNotFoundException(messageSource));
 
-        if (existingLessonOptional.isEmpty()) {
-            throw new LessonNotFoundException(messageSource);
-        }
+        Organisation organisation = organisationRepository.findByIdAndDeletedAtIsNull(lessonDTO.getOrganisation())
+                .orElseThrow(() -> new OrganisationNotFoundException(messageSource));
 
-        organisationRepository.findByIdAndDeletedAtIsNull(lessonDTO.getOrganisationId()).orElseThrow(() -> new OrganisationNotFoundException(messageSource));
+        modelMapper.map(lessonDTO, existingLesson);
 
-        Lesson updatedLesson = lessonRepository.save(existingLessonOptional.get());
+        existingLesson.setOrganisation(organisation);
+
+        Lesson updatedLesson = lessonRepository.save(existingLesson);
+
         return modelMapper.map(updatedLesson, LessonResponseDTO.class);
     }
+
 
     @Override
     public void deleteLesson(UUID id) {

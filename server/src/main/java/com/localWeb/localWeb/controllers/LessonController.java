@@ -42,11 +42,11 @@ public class LessonController {
         return ResponseEntity.ok(lessonService.getLessonById(id));
     }
 
-    @Operation(summary = "Get all lessons by organisation id", description = "Retrieves all the lesson in a organisation")
+    @Operation(summary = "Get all lessons by organisation id", description = "Retrieves all the lessons in a organisation")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved", content = @Content(mediaType = "application/json", schema = @Schema(implementation = LessonResponseDTO.class)))
     @ApiResponse(responseCode = "404", description = "Organisation not found")
-    @GetMapping("/{id}")
-    public ResponseEntity<List<LessonResponseDTO>> getAllByOrganisation(@PathVariable @Parameter(description = "Lesson id", example = "123e4567-e89b-12d3-a456-426614174000") UUID id) {
+    @GetMapping("/organisation/{id}")
+    public ResponseEntity<List<LessonResponseDTO>> getAllByOrganisation(@PathVariable @Parameter(description = "Organisation id", example = "123e4567-e89b-12d3-a456-426614174000") UUID id) {
         return ResponseEntity.ok(lessonService.getAllByOrganisation(id));
     }
 

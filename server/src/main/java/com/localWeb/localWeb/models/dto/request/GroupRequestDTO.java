@@ -1,6 +1,6 @@
 package com.localWeb.localWeb.models.dto.request;
 
-import com.localWeb.localWeb.models.dto.common.LessonDTO;
+import com.localWeb.localWeb.models.dto.common.GroupDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +12,6 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LessonRequestDTO extends LessonDTO {
-    private UUID organisation;
+public class GroupRequestDTO extends GroupDTO {
+    private UUID lesson;
 }

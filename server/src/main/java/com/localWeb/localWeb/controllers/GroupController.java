@@ -56,10 +56,16 @@ public class GroupController {
 
     @Operation(summary = "Get all groups by lesson id", description = "Retrieves all the groups in a lesson")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved", content = @Content(mediaType = "application/json", schema = @Schema(implementation = LessonResponseDTO.class)))
-    @ApiResponse(responseCode = "404", description = "Lesson not found")
     @GetMapping("/lesson/{id}")
     public ResponseEntity<List<GroupResponseDTO>> getAllByLesson(@PathVariable @Parameter(description = "Lesson id", example = "123e4567-e89b-12d3-a456-426614174000") UUID id) {
         return ResponseEntity.ok(groupService.getAllByLesson(id));
+    }
+
+    @Operation(summary = "Get all groups by user id", description = "Retrieves all the groups owned by the user")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved", content = @Content(mediaType = "application/json", schema = @Schema(implementation = LessonResponseDTO.class)))
+    @GetMapping("/owner/{id}")
+    public ResponseEntity<List<GroupResponseDTO>> getAllByUser(@PathVariable @Parameter(description = "User id", example = "123e4567-e89b-12d3-a456-426614174000") UUID id) {
+        return ResponseEntity.ok(groupService.getAllByUser(id));
     }
 
 

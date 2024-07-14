@@ -20,4 +20,6 @@ public interface GroupService {
     void deleteGroup(UUID id);
 
     List<GroupResponseDTO> getAllByLesson(UUID id);
+
+    List<GroupResponseDTO> getAllByUser(UUID userId);
 }

@@ -44,6 +44,13 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public List<GroupResponseDTO> getAllByUser(UUID userId) {
+        List<Group> groups = groupRepository.findAllByOwnerIdAndDeletedAtIsNull(userId);
+
+        return groups.stream().map(group -> modelMapper.map(group, GroupResponseDTO.class)).toList();
+    }
+
+    @Override
     public GroupResponseDTO getGroupById(UUID id) {
         Optional<Group> group = groupRepository.findByIdAndDeletedAtIsNull(id);
         if (group.isPresent()) {

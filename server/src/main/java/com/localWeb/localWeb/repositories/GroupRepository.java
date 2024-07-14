@@ -17,4 +17,6 @@ public interface GroupRepository extends JpaRepository<Group, UUID> {
     Optional<Group> findByIdAndDeletedAtIsNull(UUID id);
 
     List<Group> findAllByLessonIdAndDeletedAtIsNull(UUID id);
+
+    List<Group> findAllByOwnerIdAndDeletedAtIsNull(UUID id);
 }

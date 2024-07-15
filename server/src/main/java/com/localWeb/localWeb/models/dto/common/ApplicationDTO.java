@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LessonDTO {
-    private String name;
+public class ApplicationDTO {
     private String description;
 }

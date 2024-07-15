@@ -1,20 +1,22 @@
 package com.localWeb.localWeb.services;
 
-import com.localWeb.localWeb.models.dto.request.LessonRequest;
-import com.localWeb.localWeb.models.dto.response.LessonResponse;
+import com.localWeb.localWeb.models.dto.request.LessonRequestDTO;
+import com.localWeb.localWeb.models.dto.response.LessonResponseDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface LessonService {
 
-    List<LessonResponse> getAllLessons();
+    List<LessonResponseDTO> getAllLessons();
 
-    LessonResponse getLessonById(UUID id);
+    LessonResponseDTO getLessonById(UUID id);
 
-    LessonResponse createLesson(LessonRequest lessonDTO);
+    LessonResponseDTO createLesson(LessonRequestDTO lessonDTO);
 
-    LessonResponse updateLesson(UUID id, LessonRequest lessonDTO);
+    LessonResponseDTO updateLesson(UUID id, LessonRequestDTO lessonDTO);
 
     void deleteLesson(UUID id);
+
+    List<LessonResponseDTO> getAllByOrganisation(UUID id);
 }
